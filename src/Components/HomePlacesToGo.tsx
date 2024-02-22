@@ -12,7 +12,7 @@ const HomePlacesToGo = () => {
     <Box
       px={["", null, "5"]}
       bg={"#2D2D2D"}
-      width={"98%"}
+      width={{ base: "90%", sm: "98%" }}
       m={["60px auto", null, "80px auto"]}
       borderRadius={"20px"}
     >

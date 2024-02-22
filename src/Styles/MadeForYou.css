@@ -55,11 +55,14 @@
 }
 
 @media screen and (max-width: 372px) {
-  .img-madeforyou {
-    width: 70% !important;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  .gallery{
+    display: block;
   }
+  .gallery .img-madeforyou {
+    display: block;
+    height: 150px;
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 20px;
+}
 }

@@ -15,9 +15,10 @@ const HomeCities = () => {
     <Box
       px={["1", "3", "5"]}
       bg={"#2D2D2D"}
-      width={"98%"}
+      width={{ base: "90%", sm: "98%" }}
       m={["60px auto", null, "80px auto"]}
       borderRadius={"20px"}
+      p={2}
     >
       <Text
         color={"#CA933F"}
@@ -46,42 +47,13 @@ const HomeCities = () => {
               alt="Green double couch with wooden legs"
               position="relative"
               h={"80%"}
-              w="80%"
+              w={{ base: "70%", sm: "80%" }}
               mx={"auto"}
               loading="lazy"
               py={"10px"}
             />
           </Box>
-        </SwiperSlide>
-
-        <SwiperSlide>
-          <Box as={Link} to={"/cities"}>
-            <Image
-              src={siwa}
-              alt="Green double couch with wooden legs"
-              position="relative"
-              h={"80%"}
-              w="80%"
-              mx={"auto"}
-              loading="lazy"
-              py={"10px"}
-            />
-          </Box>
-        </SwiperSlide>
-        <SwiperSlide>
-          <Box as={Link} to={"/cities"}>
-            <Image
-              src={cairo}
-              alt="Green double couch with wooden legs"
-              position="relative"
-              h={"80%"}
-              w="80%"
-              mx={"auto"}
-              loading="lazy"
-              py={"10px"}
-            />
-          </Box>
-        </SwiperSlide>
+        </SwiperSlide>{" "}
         <SwiperSlide>
           <Box as={Link} to={"/cities"}>
             <Image
@@ -89,7 +61,133 @@ const HomeCities = () => {
               alt="Green double couch with wooden legs"
               position="relative"
               h={"80%"}
-              w="80%"
+              w={{ base: "70%", sm: "80%" }}
+              mx={"auto"}
+              loading="lazy"
+              py={"10px"}
+            />
+          </Box>
+        </SwiperSlide>{" "}
+        <SwiperSlide>
+          <Box as={Link} to={"/cities"}>
+            <Image
+              src={cairo}
+              alt="Green double couch with wooden legs"
+              position="relative"
+              h={"80%"}
+              w={{ base: "70%", sm: "80%" }}
+              mx={"auto"}
+              loading="lazy"
+              py={"10px"}
+            />
+          </Box>
+        </SwiperSlide>{" "}
+        <SwiperSlide>
+          <Box as={Link} to={"/cities"}>
+            <Image
+              src={siwa}
+              alt="Green double couch with wooden legs"
+              position="relative"
+              h={"80%"}
+              w={{ base: "70%", sm: "80%" }}
+              mx={"auto"}
+              loading="lazy"
+              py={"10px"}
+            />
+          </Box>
+        </SwiperSlide>{" "}
+        <SwiperSlide>
+          <Box as={Link} to={"/cities"}>
+            <Image
+              src={alex}
+              alt="Green double couch with wooden legs"
+              position="relative"
+              h={"80%"}
+              w={{ base: "70%", sm: "80%" }}
+              mx={"auto"}
+              loading="lazy"
+              py={"10px"}
+            />
+          </Box>
+        </SwiperSlide>{" "}
+        <SwiperSlide>
+          <Box as={Link} to={"/cities"}>
+            <Image
+              src={alex}
+              alt="Green double couch with wooden legs"
+              position="relative"
+              h={"80%"}
+              w={{ base: "70%", sm: "80%" }}
+              mx={"auto"}
+              loading="lazy"
+              py={"10px"}
+            />
+          </Box>
+        </SwiperSlide>{" "}
+        <SwiperSlide>
+          <Box as={Link} to={"/cities"}>
+            <Image
+              src={alex}
+              alt="Green double couch with wooden legs"
+              position="relative"
+              h={"80%"}
+              w={{ base: "70%", sm: "80%" }}
+              mx={"auto"}
+              loading="lazy"
+              py={"10px"}
+            />
+          </Box>
+        </SwiperSlide>{" "}
+        <SwiperSlide>
+          <Box as={Link} to={"/cities"}>
+            <Image
+              src={alex}
+              alt="Green double couch with wooden legs"
+              position="relative"
+              h={"80%"}
+              w={{ base: "70%", sm: "80%" }}
+              mx={"auto"}
+              loading="lazy"
+              py={"10px"}
+            />
+          </Box>
+        </SwiperSlide>{" "}
+        <SwiperSlide>
+          <Box as={Link} to={"/cities"}>
+            <Image
+              src={alex}
+              alt="Green double couch with wooden legs"
+              position="relative"
+              h={"80%"}
+              w={{ base: "70%", sm: "80%" }}
+              mx={"auto"}
+              loading="lazy"
+              py={"10px"}
+            />
+          </Box>
+        </SwiperSlide>{" "}
+        <SwiperSlide>
+          <Box as={Link} to={"/cities"}>
+            <Image
+              src={alex}
+              alt="Green double couch with wooden legs"
+              position="relative"
+              h={"80%"}
+              w={{ base: "70%", sm: "80%" }}
+              mx={"auto"}
+              loading="lazy"
+              py={"10px"}
+            />
+          </Box>
+        </SwiperSlide>{" "}
+        <SwiperSlide>
+          <Box as={Link} to={"/cities"}>
+            <Image
+              src={alex}
+              alt="Green double couch with wooden legs"
+              position="relative"
+              h={"80%"}
+              w={{ base: "70%", sm: "80%" }}
               mx={"auto"}
               loading="lazy"
               py={"10px"}
