@@ -1,0 +1,113 @@
+.curve {
+  overflow: hidden;
+  margin-top: 100px;
+  position: relative;
+  bottom: 0;
+}
+.curve .img {
+  height: 300px;
+  width: 100%;
+}
+
+.words {
+  position: absolute;
+  bottom: 80px;
+  left: 2%;
+}
+.words h1 {
+  font-size: 28px;
+  font-weight: bold;
+}
+.lists {
+  display: flex;
+  gap: 210px;
+}
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  margin-right: 80px;
+  gap: 10px;
+  position: relative;
+  margin-top: -108px;
+}
+.icon img {
+  /* font-size: 20px; */
+  margin: 15px 0px;
+}
+.icon p {
+  font-family: "Inria Serif";
+  font-size: 35px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+@media screen and (max-width: 1182px) {
+  .lists {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 160px;
+  }
+}
+@media screen and (max-width: 1107px) {
+  .lists {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 120px;
+  }
+}
+@media screen and (max-width: 992px) {
+  .lists {
+    display: flex;
+    gap: 80px;
+  }
+}
+@media screen and (max-width: 837px) {
+  .lists {
+    display: flex;
+    gap: 20px;
+  }
+}
+@media screen and (max-width: 698px) {
+  .lists {
+    display: flex;
+    gap: 50px;
+  }
+  .curve .img {
+    display: none;
+  }
+  .curve {
+    position: relative;
+    margin-top: 100px;
+    background-color: #ca933f;
+    width: 100%;
+    padding: 50px 0;
+  }
+  .words {
+    position: relative;
+    bottom: -25px;
+    left: 0;
+  }
+  .lists {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+    text-align: center;
+    padding: 20px 0;
+  }
+}
+
+@media screen and (max-width: 543px) {
+  .icon {
+    position: absolute;
+    bottom: 72%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding-bottom: 10px;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+  }
+}
