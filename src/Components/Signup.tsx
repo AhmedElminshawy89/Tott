@@ -201,7 +201,6 @@ const Signup: React.FC = () => {
       }
 
       dispatch(userRegister(user));
-      console.log(user);
     },
     [dispatch, user]
   );

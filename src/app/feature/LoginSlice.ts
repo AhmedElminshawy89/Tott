@@ -44,7 +44,7 @@ const loginSlice = createSlice({
         const IN_DAYS = 7;
         const EXPIRE_AT_DAYS = 1000 * 60 * 60 * 24 * IN_DAYS;
         date.setTime(date.getTime() + EXPIRE_AT_DAYS);
-        const options = { path: "/", expires: date };
+        const options = { path: "/Tott/", expires: date };
         CookiesServices.set("jwt", action.payload.jwt, options);
         Toastify({
           title: "Login Successfully",

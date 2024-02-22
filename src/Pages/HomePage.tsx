@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { Suspense } from "react";
+// import { Suspense } from "react";
 import Spinner from "../Shared/SpinnerLoading";
 import HomeSwiper from "../Components/HomeSwiper";
 import MadeForYou from "../Components/MadeForYou";
@@ -24,7 +24,7 @@ const HomePage = () => {
   return (
     <Helmet title="Home">
       <div>
-        <Suspense fallback={<Spinner />}>
+        {/* <Suspense fallback={<Spinner />}> */}
           <HomeSwiper />
           <HomeSearch />
           <MadeForYou />
@@ -35,7 +35,7 @@ const HomePage = () => {
           <HomePlacesToGo />
           <Footer />
           <img className="IconBottom" src={IconBottom} alt="" />
-        </Suspense>
+        {/* </Suspense> */}
       </div>
     </Helmet>
   );

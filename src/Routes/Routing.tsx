@@ -1,18 +1,17 @@
-import { lazy, Suspense } from "react";
+// import  { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import { motion } from "framer-motion";
 import Applayout from "../layout/Applayout";
-import { Spinner } from "@chakra-ui/react";
 
-const HomePage = lazy(() => import("../Pages/HomePage"));
-const Registration = lazy(() => import("../Pages/Regestration"));
-const Cities = lazy(() => import("../Pages/Cities"));
-const TripsMaster = lazy(() => import("../Pages/TripsMaster"));
-const Account = lazy(() => import("../Pages/Account/AccountLayout"));
-const PersonalInf = lazy(() => import("../Pages/Account/PersonalInf"));
-const Plans = lazy(() => import("../Pages/Account/Plans"));
-const Favourites = lazy(() => import("../Pages/Account/Favourites"));
-const Aboutus = lazy(() => import("../Pages/Account/Aboutus"));
+import HomePage from "../Pages/HomePage";
+import Registration from "../Pages/Regestration";
+import Cities  from "../Pages/Cities";
+import TripsMaster  from "../Pages/TripsMaster";
+import Account  from "../Pages/Account/AccountLayout";
+import PersonalInf  from "../Pages/Account/PersonalInf";
+import Plans from "../Pages/Account/Plans";
+import Favourites  from "../Pages/Account/Favourites";
+import Aboutus  from "../Pages/Account/Aboutus";
 
 const Routing = () => {
   return (
@@ -22,7 +21,7 @@ const Routing = () => {
       exit={{ opacity: 0, y: -100 }}
       transition={{ duration: 1 }}
     >
-      <Suspense fallback={<Spinner className=" fixed top-[50%] left-1/2 transform -translate-x-1/2 -translate-y-1/2"/>}>
+      {/* <Suspense fallback={<div>Loading...</div>}> */}
         <Routes>
           <Route path="/" element={<Applayout />}>
             <Route index element={<HomePage />} />
@@ -38,7 +37,7 @@ const Routing = () => {
           </Route>
           <Route path="/login" element={<Registration />} />
         </Routes>
-      </Suspense>
+      {/* </Suspense> */}
     </motion.div>
   );
 };

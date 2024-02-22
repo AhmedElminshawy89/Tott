@@ -58,11 +58,18 @@ export default function Navbar() {
   const userData = GetData ? JSON.parse(GetData) : null;
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  function removeCookie(name: string) {
+    if (document.cookie.indexOf(`${name}=`) !== -1) {
+      document.cookie = `${name}=; path=/Tott/`;
+    }
+  }
+  
   const handleLogOut = () => {
-    CookiesServices.remove("jwt");
-    localStorage.removeItem("userData");
-    window.location.reload();
+    removeCookie('jwt');
+    localStorage.removeItem("username");
+    window.location.reload(); // Consider alternative approaches if needed
   };
+  
 
   return (
     <>
@@ -149,10 +156,12 @@ export default function Navbar() {
                   />
                 </MenuButton>
                 <MenuList>
-                  <MenuItem>Welcome , {userData.username}</MenuItem>
-                  <MenuItem as={NavLink} to="/account/MyPersonalInfo">
-                    Account
-                  </MenuItem>
+                  <MenuItem>Welcome , {userData?.username}</MenuItem>
+                  {userData&&(
+                    <MenuItem as={NavLink} to="/account/MyPersonalInfo">
+                      Account
+                    </MenuItem>
+                  )}
                   <MenuDivider />
                   <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
                 </MenuList>
