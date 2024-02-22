@@ -205,16 +205,20 @@ const Signup: React.FC = () => {
     [dispatch, user]
   );
   const customStyles: StylesConfig<
-    { label: string; value: string },
-    false,
-    GroupBase<{ label: string; value: string }>
-  > = {
-    control: (base) => ({
-      ...base,
-      background: useColorModeValue("#eee", "white"),
-      border: "none",
-    }),
-  };
+  { label: string; value: string },
+  false,
+  GroupBase<{ label: string; value: string }>
+> = {
+  control: (base) => ({
+    ...base,
+    background: useColorModeValue("#eee", "white"),
+    border: "none",
+  }),
+  option: (provided) => ({
+    ...provided,
+    color: useColorModeValue("#555", "black"), 
+  }),
+};
   return (
     <form className="sign-up-form" onSubmit={handleSubmit}>
       <Text className="title" color={useColorModeValue("black.500", "white")}>
@@ -318,6 +322,25 @@ const Signup: React.FC = () => {
         </FormControl>
       </Flex>
       <Flex w={"100%"} justifyContent={"space-between"} gap={"12px"}>
+      <FormControl>
+          <Select
+            className="mt-[15px]"
+            name="country"
+            value={
+              user.country ? { label: user.country, value: user.country } : null
+            }
+            onChange={(selectedOption) =>
+              selectedOption && handleSelectChange(selectedOption, "country")
+            }
+            options={countryList.map((country) => ({
+              label: country,
+              value: country,
+            }))}
+            placeholder="Select Country"
+            styles={customStyles}
+            isSearchable
+          />
+        </FormControl>
         <FormControl>
           <Select
             className="mt-[15px]"
@@ -335,25 +358,6 @@ const Signup: React.FC = () => {
                 : []
             }
             placeholder="Select City"
-            styles={customStyles}
-            isSearchable
-          />
-        </FormControl>
-        <FormControl>
-          <Select
-            className="mt-[15px]"
-            name="country"
-            value={
-              user.country ? { label: user.country, value: user.country } : null
-            }
-            onChange={(selectedOption) =>
-              selectedOption && handleSelectChange(selectedOption, "country")
-            }
-            options={countryList.map((country) => ({
-              label: country,
-              value: country,
-            }))}
-            placeholder="Select Country"
             styles={customStyles}
             isSearchable
           />

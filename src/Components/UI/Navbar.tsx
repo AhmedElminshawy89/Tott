@@ -67,7 +67,7 @@ export default function Navbar() {
   const handleLogOut = () => {
     removeCookie('jwt');
     localStorage.removeItem("username");
-    window.location.reload(); // Consider alternative approaches if needed
+    window.location.reload();
   };
   
 
