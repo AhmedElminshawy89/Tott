@@ -1,7 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { LoginState, UserData } from "../../Interface";
 import { Toastify } from "../../Shared/Toastify";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 const initialState: LoginState = {
   loading: false,
@@ -46,14 +46,26 @@ const registerSlice = createSlice({
         });
       }
     );
-    builder.addCase(userRegister.rejected, (state) => {
+    builder.addCase(userRegister.rejected, (state,action) => {
       state.loading = false;
       state.error = true;
-      Toastify({
-        title: "Register failed",
-        description: "Email or Username are already taken",
-        status: "error",
-      });
+      const error = action.payload as unknown as AxiosError;
+
+
+      if (error.response && error.response.status === 400) {
+        Toastify({
+          title: "Login failed",
+          description: "Please check your credentials and try again.",
+          status: "error",
+        });
+      } else {
+        Toastify({
+          title: "Connection Error",
+          description:
+            "Failed to connect to the server. Please try again later.",
+          status: "error",
+        });
+      }
     });
   },
 });

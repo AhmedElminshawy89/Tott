@@ -1,8 +1,8 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { LoginState, UserData } from "../../Interface";
 import CookiesServices from "../../Services/CookiesServices";
 import { Toastify } from "../../Shared/Toastify";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 const initialState: LoginState = {
   loading: false,
@@ -25,6 +25,7 @@ export const userLogin = createAsyncThunk<
     return thunkAPI.rejectWithValue(true);
   }
 });
+
 const loginSlice = createSlice({
   initialState,
   name: "login",
@@ -48,19 +49,30 @@ const loginSlice = createSlice({
         CookiesServices.set("jwt", action.payload.jwt, options);
         Toastify({
           title: "Login Successfully",
-          description: "Inlogin process has been successfully completed.",
+          description: "Login process has been successfully completed.",
           status: "success",
         });
       }
     );
-    builder.addCase(userLogin.rejected, (state) => {
+    builder.addCase(userLogin.rejected, (state, action) => {
       state.loading = false;
       state.error = true;
-      Toastify({
-        title: "Login failed",
-        description: "Please check your credentials and try again.",
-        status: "error",
-      });
+      const error = action.payload as unknown as AxiosError;
+
+      if (error.response && error.response.status === 400) {
+        Toastify({
+          title: "Login failed",
+          description: "Please check your credentials and try again.",
+          status: "error",
+        });
+      } else {
+        Toastify({
+          title: "Connection Error",
+          description:
+            "Failed to connect to the server. Please try again later.",
+          status: "error",
+        });
+      }
     });
   },
 });
