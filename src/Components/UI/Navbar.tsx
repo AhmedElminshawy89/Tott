@@ -26,30 +26,36 @@ import IconTutBlack from "../../assets/Images/IconTutBlack.png";
 import { Link } from "react-scroll";
 import { BiSearch } from "react-icons/bi";
 import CookiesServices from "../../Services/CookiesServices";
+import { useEffect, useState } from "react";
 
-interface Props {
-  children: React.ReactNode;
-}
-const Links = ["Dashboard", "Projects", "Team"];
-const NavLinks = (props: Props) => {
-  const { children } = props;
+// interface Props {
+//   children: React.ReactNode;
+// }
+// const Links = ["Dashboard", "Projects", "Team"];
+// const NavLinks = (props: Props) => {
+//   const { onClose } = useDisclosure();
+//   const handleCloseNav = () => {
+//     onClose();
+//   };
+//   const { children } = props;
 
-  return (
-    <Box
-      as="a"
-      px={2}
-      py={1}
-      rounded={"md"}
-      _hover={{
-        textDecoration: "none",
-        bg: "transparent",
-      }}
-      href={"#"}
-    >
-      {children}
-    </Box>
-  );
-};
+//   return (
+//     <Box
+//       as="a"
+//       px={2}
+//       py={1}
+//       rounded={"md"}
+//       _hover={{
+//         textDecoration: "none",
+//         bg: "transparent",
+//       }}
+//       href={"#"}
+//       onClick={handleCloseNav}
+//     >
+//       {children}
+//     </Box>
+//   );
+// };
 
 export default function Navbar() {
   const jwt = CookiesServices.get("jwt");
@@ -63,17 +69,32 @@ export default function Navbar() {
       document.cookie = `${name}=; path=/Tott/`;
     }
   }
-  
   const handleLogOut = () => {
-    removeCookie('jwt');
+    removeCookie("jwt");
     localStorage.removeItem("username");
     window.location.reload();
   };
-  
+  const [isScrolled, setIsScrolled] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const scrollThreshold = 20;
 
+      setIsScrolled(scrollTop >= scrollThreshold);
+      onClose()
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
     <>
-      <Box className={`min-sm:px-4 px-1 bg-[#CA933F]`}>
+      <Box
+        className={`min-sm:px-4 px-1 bg-[#CA933F] ${
+          isScrolled ? "navScroll shadow-2xl" : ""
+        }`}
+      >
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <IconButton
             size={"md"}
@@ -115,9 +136,9 @@ export default function Navbar() {
               spacing={4}
               display={{ base: "none", md: "flex" }}
             >
-              {Links.map((link) => (
+              {/* {Links.map((link) => (
                 <NavLinks key={link}>{link}</NavLinks>
-              ))}
+              ))} */}
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
@@ -157,7 +178,7 @@ export default function Navbar() {
                 </MenuButton>
                 <MenuList>
                   <MenuItem>Welcome , {userData?.username}</MenuItem>
-                  {userData&&(
+                  {userData && (
                     <MenuItem as={NavLink} to="/account/MyPersonalInfo">
                       Account
                     </MenuItem>
@@ -197,15 +218,19 @@ export default function Navbar() {
           </Flex>
         </Flex>
         {isOpen ? (
-          <Box pb={4} display={{ md: "none" }} bg="#CA933F">
+          <Box
+            pb={4}
+            display={{ md: "none" }}
+            bg={`${isScrolled ? "rgb(202 147 63 / .9)" : "#CA933F"}`}
+          >
             <Stack
               as={"nav"}
               spacing={4}
               color={useColorModeValue("white", "black")}
             >
-              {Links.map((link) => (
+              {/* {Links.map((link) => (
                 <NavLinks key={link}>{link}</NavLinks>
-              ))}
+              ))} */}
               <Stack display={{ md: "none" }}>
                 <TripPlane />
               </Stack>
@@ -234,6 +259,7 @@ export default function Navbar() {
                   color={useColorModeValue("white", "black")}
                   outline={"none"}
                   mb={-4}
+                  onClick={()=>onClose()}
                 />
               </Flex>
             </Stack>

@@ -50,19 +50,17 @@ const registerSlice = createSlice({
       state.loading = false;
       state.error = true;
       const error = action.payload as unknown as AxiosError;
-
-
       if (error.response && error.response.status === 400) {
-        Toastify({
-          title: "Login failed",
-          description: "Please check your credentials and try again.",
-          status: "error",
-        });
-      } else {
         Toastify({
           title: "Connection Error",
           description:
             "Failed to connect to the server. Please try again later.",
+          status: "error",
+        });
+      } else {
+        Toastify({
+          title: "Login failed",
+          description: "Please check your credentials and try again.",
           status: "error",
         });
       }

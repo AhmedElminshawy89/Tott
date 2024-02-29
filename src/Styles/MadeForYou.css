@@ -46,15 +46,8 @@
   }
 }
 
-@media screen and (max-width: 570px) {
-  .gallery .img-madeforyou:nth-child(-n + 7) {
-    grid-column: span 8;
-    grid-row: span 1;
-    width: 100%;
-  }
-}
 
-@media screen and (max-width: 372px) {
+@media screen and (max-width: 570px) {
   .gallery{
     display: block;
   }

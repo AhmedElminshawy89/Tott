@@ -9,6 +9,7 @@ import { selectNetwork } from "../app/feature/NetworkSlice";
 import Helmet from "../Shared/Helmet";
 import login from "../assets/Images/login.png";
 import signup from "../assets/Images/registration.png";
+import Disconnect from "../Components/Disconnect";
 const Registration: React.FC = () => {
   const [isSignUpMode, setIsSignUpMode] = useState<boolean>(false);
   const { colorMode } = useColorMode();
@@ -22,7 +23,8 @@ const Registration: React.FC = () => {
   }, []);
 
   const { isOnline } = useSelector(selectNetwork);
-  if (!isOnline) return null;
+
+  if (!isOnline) return <Disconnect/>;
 
   return (
     <Helmet title="Regestration">
