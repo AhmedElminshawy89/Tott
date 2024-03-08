@@ -7,8 +7,8 @@ import reWrite from "../../assets/Images/reWrite.png";
 import { motion } from "framer-motion";
 
 const PersonalInf = () => {
-  const GetData = localStorage.getItem("username");
-  const userData = GetData ? JSON.parse(GetData) : null;
+  // const GetData = localStorage.getItem("username");
+  // const userData = GetData ? JSON.parse(GetData) : null;
 
   return (
     <motion.div
@@ -35,7 +35,8 @@ const PersonalInf = () => {
               className=" md:text-4xl text-2xl text-main-400"
               fontWeight={900}
             >
-              {userData.username}
+              {/* {userData.username ? userData.username : "Ahmed Elminshawy"} */}
+              Ahmed Elminshawy
             </Text>
             <Image
               src={reWrite}
@@ -72,7 +73,8 @@ const PersonalInf = () => {
               First name
             </Text>
             <Text className="md:text-3xl text-2xl text-main-400 mt-4  break-all">
-              {userData.username}
+              {/* {userData.username ? userData.username : "Ahmed"} */}
+              Ahmed
             </Text>
           </Flex>
           <Flex justifyContent={"space-between"}>
@@ -80,7 +82,8 @@ const PersonalInf = () => {
               Last name
             </Text>
             <Text className="md:text-3xl text-2xl text-main-400 mt-4  break-all">
-              {userData.username}
+              {/* {userData.username ? userData.username : "Elminshawy"} */}
+              Elminshawy
             </Text>
           </Flex>
           <Flex justifyContent={"space-between"}>
@@ -88,7 +91,8 @@ const PersonalInf = () => {
               Email
             </Text>
             <Text className="md:text-3xl text-2xl text-main-400 mt-4 break-all">
-              {userData.email}
+              {/* {userData.email ? userData.email : "ahmed@gmail.com"} */}
+              ahmed@gmail.com
             </Text>
           </Flex>
           <Flex justifyContent={"space-between"}>
@@ -96,7 +100,8 @@ const PersonalInf = () => {
               Phone
             </Text>
             <Text className="md:text-3xl text-2xl text-main-400 mt-4">
-              {userData.phone}
+              {/* {userData.phone ? userData.phone : "01286552467"} */}
+              01286552467
             </Text>
           </Flex>
           <Flex justifyContent={"space-between"}>
@@ -104,7 +109,8 @@ const PersonalInf = () => {
               Age
             </Text>
             <Text className="md:text-3xl text-2xl text-main-400 mt-4  break-all">
-              {userData.age}
+              {/* {userData.age ? userData.age : "24"} */}
+              24
             </Text>
           </Flex>
           <Flex justifyContent={"space-between"}>
@@ -112,7 +118,8 @@ const PersonalInf = () => {
               Gender
             </Text>
             <Text className="md:text-3xl text-2xl text-main-400 mt-4  break-all">
-              {userData.gender}
+              {/* {userData.gender ? userData.gender : "male"} */}
+              male
             </Text>
           </Flex>
           <Flex justifyContent={"space-between"}>
@@ -120,7 +127,7 @@ const PersonalInf = () => {
               Country
             </Text>
             <Text className="md:text-3xl text-2xl text-main-400 mt-4  break-all">
-              {userData.country}
+              {/* {userData.country ? userData.country : "Egypt"} */}Egypt
             </Text>
           </Flex>
           <Flex justifyContent={"space-between"}>
@@ -128,7 +135,8 @@ const PersonalInf = () => {
               City
             </Text>
             <Text className="md:text-3xl text-2xl text-main-400 mt-4  break-all">
-              {userData.city}
+              {/* {userData.city ? userData.city : "Alexandria"} */}
+              Alexandria
             </Text>
           </Flex>
         </Box>

@@ -58,8 +58,8 @@ const LinkItems: Array<LinkItemProps> = [
 ];
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
-  const GetData = localStorage.getItem("username");
-  const userData = GetData ? JSON.parse(GetData) : null;
+  // const GetData = localStorage.getItem("username");
+  // const userData = GetData ? JSON.parse(GetData) : null;
   const location = useLocation();
   const handleLinkClick = () => {
     onClose();
@@ -94,7 +94,8 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             objectFit={"contain"}
           />
           <Text fontSize="md" color={"#424242"}>
-          {userData.username}
+          {/* {userData.username} */}
+          Ahmed Elminshawy
           </Text>
         </Flex>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
