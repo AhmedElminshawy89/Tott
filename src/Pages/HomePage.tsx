@@ -12,7 +12,7 @@ import Helmet from "../Shared/Helmet";
 import HomeHotels from "../Components/HomeHotels";
 import HomeResturant from "../Components/HomeResturant";
 import HomePlacesToGo from "../Components/HomePlacesToGo";
-import Disconnect from "../Components/Disconnect";
+import Disconnect from "./Disconnect";
 
 const HomePage = () => {
   const { isOnline } = useSelector(selectNetwork);

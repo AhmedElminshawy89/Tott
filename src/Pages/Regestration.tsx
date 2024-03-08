@@ -9,7 +9,7 @@ import { selectNetwork } from "../app/feature/NetworkSlice";
 import Helmet from "../Shared/Helmet";
 import login from "../assets/Images/login.png";
 import signup from "../assets/Images/registration.png";
-import Disconnect from "../Components/Disconnect";
+import Disconnect from "./Disconnect";
 const Registration: React.FC = () => {
   const [isSignUpMode, setIsSignUpMode] = useState<boolean>(false);
   const { colorMode } = useColorMode();

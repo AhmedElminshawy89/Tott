@@ -17,6 +17,7 @@ const PlansCard = () => {
       overflow="hidden"
       variant="outline"
       backgroundColor={"#2D2D2D"}
+      color={'#fff'}
       p={2}
       marginTop={4}
     >

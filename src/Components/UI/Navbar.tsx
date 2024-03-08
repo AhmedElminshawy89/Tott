@@ -28,34 +28,35 @@ import { BiSearch } from "react-icons/bi";
 import CookiesServices from "../../Services/CookiesServices";
 import { useEffect, useState } from "react";
 
-// interface Props {
-//   children: React.ReactNode;
-// }
-// const Links = ["Dashboard", "Projects", "Team"];
-// const NavLinks = (props: Props) => {
-//   const { onClose } = useDisclosure();
-//   const handleCloseNav = () => {
-//     onClose();
-//   };
-//   const { children } = props;
+interface Props {
+  children: React.ReactNode;
+  to:string
+}
+const Links = [{ name: "Acount", to: "/account/MyPersonalInfo" }];
+const NavLinks = (props: Props) => {
+  const { onClose } = useDisclosure();
+  const handleCloseNav = () => {
+    onClose();
+  };
+  const { children , to } = props;
 
-//   return (
-//     <Box
-//       as="a"
-//       px={2}
-//       py={1}
-//       rounded={"md"}
-//       _hover={{
-//         textDecoration: "none",
-//         bg: "transparent",
-//       }}
-//       href={"#"}
-//       onClick={handleCloseNav}
-//     >
-//       {children}
-//     </Box>
-//   );
-// };
+  return (
+    <Box
+      as={NavLink}
+      to={to}
+      px={2}
+      py={1}
+      rounded={"md"}
+      _hover={{
+        textDecoration: "none",
+        bg: "transparent",
+      }}
+      onClick={handleCloseNav}
+    >
+      {children}
+    </Box>
+  );
+};
 
 export default function Navbar() {
   const jwt = CookiesServices.get("jwt");
@@ -81,13 +82,13 @@ export default function Navbar() {
       const scrollThreshold = 20;
 
       setIsScrolled(scrollTop >= scrollThreshold);
-      onClose()
+      onClose();
     };
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [onClose]);
   return (
     <>
       <Box
@@ -136,9 +137,9 @@ export default function Navbar() {
               spacing={4}
               display={{ base: "none", md: "flex" }}
             >
-              {/* {Links.map((link) => (
-                <NavLinks key={link}>{link}</NavLinks>
-              ))} */}
+              {Links.map((link) => (
+                <NavLinks to={link.to}>{link.name}</NavLinks>
+              ))}
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
@@ -173,7 +174,8 @@ export default function Navbar() {
                 >
                   <Avatar
                     size={"sm"}
-                    src={"http://localhost:1337/uploads/me_8dee4a849c.jpg"}
+                    // src={"http://localhost:1337/uploads/me_8dee4a849c.jpg"}
+                    // src={"http://localhost:1337/uploads/me_8dee4a849c.jpg"}
                   />
                 </MenuButton>
                 <MenuList>
@@ -194,7 +196,7 @@ export default function Navbar() {
               to="search"
               spy={true}
               smooth={true}
-              offset={-40}
+              offset={-150}
               size={"md"}
               fontSize={"22px"}
               cursor={"pointer"}
@@ -228,9 +230,9 @@ export default function Navbar() {
               spacing={4}
               color={useColorModeValue("white", "black")}
             >
-              {/* {Links.map((link) => (
-                <NavLinks key={link}>{link}</NavLinks>
-              ))} */}
+              {Links.map((link) => (
+                <NavLinks to={link.to}>{link.name}</NavLinks>
+              ))}
               <Stack display={{ md: "none" }}>
                 <TripPlane />
               </Stack>
@@ -245,7 +247,7 @@ export default function Navbar() {
                 <IconButton
                   as={Link}
                   to="search"
-                  offset={-90}
+                  offset={-260}
                   spy={true}
                   smooth={true}
                   size={"md"}
@@ -259,7 +261,7 @@ export default function Navbar() {
                   color={useColorModeValue("white", "black")}
                   outline={"none"}
                   mb={-4}
-                  onClick={()=>onClose()}
+                  onClick={() => onClose()}
                 />
               </Flex>
             </Stack>

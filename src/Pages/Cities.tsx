@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { Box, Text } from "@chakra-ui/react";
 import BoxCities from "../Components/Boxes/BoxCities";
 import alex_city from "../assets/Images/alex-city.png";
@@ -14,6 +15,9 @@ import Helmet from "../Shared/Helmet";
 import { useEffect } from "react";
 import { useGetWeatherDataQuery } from "../app/feature/weatherApi ";
 import { IWeatherIcons } from "../Interface";
+import { useSelector } from "react-redux";
+import { selectNetwork } from "../app/feature/NetworkSlice";
+import Disconnect from "./Disconnect";
 
 const GridContainer = styled.div`
   display: grid;
@@ -35,7 +39,8 @@ const Cities = () => {
 
   const city = "Alexandria";
   const { data, error, isLoading } = useGetWeatherDataQuery(city);
-
+  const { isOnline } = useSelector(selectNetwork);
+  if (!isOnline) return <Disconnect />;
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
 
