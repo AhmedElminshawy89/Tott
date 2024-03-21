@@ -56,7 +56,13 @@ const AddPlaces = () => {
       [name]: value,
     }));
   };
-
+  const onChangeHandlerTextarea = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setPlaceData((prevCourseData) => ({
+      ...prevCourseData,
+      [name]: value,
+    }));
+  };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newErrors: { [key: string]: string } = {};
@@ -227,7 +233,7 @@ const AddPlaces = () => {
               border={"1px solid"}
               name="description"
               value={placeData.description}
-              onChange={onChangeHandler}
+              onChange={onChangeHandlerTextarea}
             />
             {errors.description && (
               <FormHelperText
@@ -303,7 +309,7 @@ const AddPlaces = () => {
             type="submit"
             className="text-white bg-black px-4  py-2 rounded-lg duration-300  text-xl"
           >
-            Add Course
+            Add Place
           </button>
         </Box>
       </form>

@@ -78,12 +78,11 @@ import { ICityData } from "../../Interface";
     return (
       <Box>
         <Box className="flex justify-end">
-          <ModelDash
+        <ModelDash
             ButtonName="Add City"
             title="Create A City"
-            handleSubmit={handleSubmit}
           >
-            <>
+            <form onSubmit={handleSubmit} className="p-0">
               <FormControl mb={4}>
                 <FormLabel>City name</FormLabel>
                 <Input
@@ -179,7 +178,10 @@ import { ICityData } from "../../Interface";
                   </FormHelperText>
                 )}
               </FormControl>
-            </>
+              <Box  className="flex justify-end mt-4">
+              <Button type="submit" bg={'black'} color={'white'} _hover={{bg:'black'}}>Save</Button> 
+              </Box>
+            </form>
           </ModelDash>
         </Box>
         <TableContainer

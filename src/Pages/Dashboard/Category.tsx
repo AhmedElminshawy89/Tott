@@ -57,9 +57,9 @@ import { ICategoryData } from "../../Interface";
           <ModelDash
             ButtonName="Add Category"
             title="Create A Category"
-            handleSubmit={handleSubmit}
+            // handleSubmit={handleSubmit}
           >
-            <>
+            <form onSubmit={handleSubmit} className="p-0">
               <FormControl mb={4}>
                 <FormLabel>Category name</FormLabel>
                 <Input
@@ -78,7 +78,10 @@ import { ICategoryData } from "../../Interface";
                   </FormHelperText>
                 )}
               </FormControl>
-            </>
+              <Box  className="flex justify-end mt-4">
+              <Button type="submit" bg={'black'} color={'white'} _hover={{bg:'black'}}>Save</Button> 
+              </Box>
+            </form>
           </ModelDash>
         </Box>
         <TableContainer

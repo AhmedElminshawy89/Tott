@@ -23,7 +23,7 @@ import { ThunkDispatch } from "redux-thunk";
 import { RootState } from "../../app/Store";
 import { AnyAction } from "@reduxjs/toolkit";
 import { countryList } from "../../assets/data/Countries";
-import Select, { GroupBase, StylesConfig } from "react-select";
+import Select from "react-select";
 import { cities } from "../../assets/data/Cities";
 
 const AddUser = () => {
@@ -215,21 +215,6 @@ const AddUser = () => {
       },
       [dispatch, user]
     );
-    const customStyles: StylesConfig<
-      { label: string; value: string },
-      false,
-      GroupBase<{ label: string; value: string }>
-    > = {
-      control: (base) => ({
-        ...base,
-        background: useColorModeValue("#eee", "white"),
-        border: "none",
-      }),
-      option: (provided) => ({
-        ...provided,
-        color: useColorModeValue("#555", "black"),
-      }),
-    };
   return (
     <Box className="flex flex-col text-2xl  rounded-xl ">
     <form  onSubmit={handleSubmit} className="p-0">
