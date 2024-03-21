@@ -2,11 +2,12 @@ import { ReactNode } from "react";
 import { DateRange, SelectRangeEventHandler } from "react-day-picker";
 
 export interface UserState {
-  identifier: string;
+  email: string;
   password: string;
 }
 export interface UserSignUp {
-  username: string;
+  fname: string;
+  lname: string;
   email: string;
   password: string;
   com_password: string;
@@ -15,7 +16,7 @@ export interface UserSignUp {
   gender: string;
   city: string;
   country: string;
-  Media: File | null;
+  photo: File | null;
 }
 export interface NetworkState {
   isOnline: boolean;
@@ -57,9 +58,9 @@ export interface UserData {
   id?: number;
   user?: {
     username?: string;
+    api_token?: string;
   };
   username?: string;
-  jwt?: string;
   identifier?: string;
   password?: string;
 }
@@ -72,4 +73,28 @@ export interface LoginState {
 export interface CountryOption {
   label: string;
   value: string;
+}
+export interface ICategoryData {
+  categoryName: string;
+}
+export interface ICityData {
+  cityName: string;
+  description: string;
+  Image: File | null;
+}
+export interface IPlaceData extends ICityData {
+  placeName: string;
+  categoryName: string;
+  location: string;
+  initRate: string;
+}
+export interface IAdminData {
+  FName: string,
+  LName: string,
+  Phone: string,
+  Age: string,
+  Email: string,
+  Password: string,
+  com_password: string,
+  Image: File|null,
 }

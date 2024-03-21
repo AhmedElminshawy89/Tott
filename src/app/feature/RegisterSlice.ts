@@ -16,10 +16,10 @@ export const userRegister = createAsyncThunk<
 >("register/userRegister", async (user, thunkAPI) => {
   try {
     const { data } = await axios.post<UserData>(
-      "http://localhost:1337/api/auth/local/register",
+      "http://localhost:8001/api/registerUser",
       user
     );
-    localStorage.setItem("userData", JSON.stringify(data.user?.username));
+    // localStorage.setItem("userData", JSON.stringify(data.user?.username));
     return data;
   } catch (error) {
     return thunkAPI.rejectWithValue(true);
@@ -46,7 +46,7 @@ const registerSlice = createSlice({
         });
       }
     );
-    builder.addCase(userRegister.rejected, (state,action) => {
+    builder.addCase(userRegister.rejected, (state, action) => {
       state.loading = false;
       state.error = true;
       const error = action.payload as unknown as AxiosError;
@@ -59,8 +59,8 @@ const registerSlice = createSlice({
         });
       } else {
         Toastify({
-          title: "Login failed",
-          description: "Please check your credentials and try again.",
+          title: "Register failed",
+          description: "This email has already been used before",
           status: "error",
         });
       }

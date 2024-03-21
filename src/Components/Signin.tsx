@@ -27,7 +27,7 @@ const Signin: React.FC = () => {
   const { loading } = useSelector(selectLogin);
   const dispatch = useDispatch<MyDispatch>();
   const [user, setUser] = useState<UserState>({
-    identifier: "",
+    email: "",
     password: "",
   });
   const [isEmail, setIsEmail] = useState<boolean | string>(false);
@@ -45,7 +45,7 @@ const Signin: React.FC = () => {
 
       setUser((prevUser) => ({ ...prevUser, [name]: value }));
 
-      if (name === "identifier") {
+      if (name === "email") {
         if (!value.trim() || !/\S+@\S+\.\S+/.test(value)) {
           setIsEmail(
             !value.trim() ? "Email is required" : "Invalid email address"
@@ -80,7 +80,7 @@ const Signin: React.FC = () => {
   const onBlurHandler = useCallback(
     (event: React.FocusEvent<HTMLInputElement>) => {
       const { name, value } = event.target;
-      if (name === "identifier" && !value.trim()) {
+      if (name === "email" && !value.trim()) {
         setIsEmail("Email is required");
       } else if (name === "password" && !value.trim()) {
         setIsPassword("Password is required");
@@ -91,7 +91,7 @@ const Signin: React.FC = () => {
   const handleSubmit = useCallback(
     async (event: React.FormEvent) => {
       event.preventDefault();
-      if (!user.identifier.trim()) {
+      if (!user.email.trim()) {
         setIsEmail("Email is required");
       }
       if (!user.password.trim()) {
@@ -117,10 +117,10 @@ const Signin: React.FC = () => {
           type="text"
           className="input"
           placeholder="Email"
-          name="identifier"
+          name="email"
           isInvalid={!!isEmail}
           onBlur={onBlurHandler}
-          value={user.identifier}
+          value={user.email}
           onChange={onChangeHandler}
           bg={useColorModeValue("#eee", "white")}
           autoComplete="off"

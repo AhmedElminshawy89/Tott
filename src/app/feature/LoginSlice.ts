@@ -17,7 +17,7 @@ export const userLogin = createAsyncThunk<
 >("login/userLogin", async (user, thunkAPI) => {
   try {
     const { data } = await axios.post<UserData>(
-      "http://localhost:1337/api/auth/local",
+      "http://localhost:8001/api/loginUser",
       user
     );
     return data;
@@ -46,7 +46,7 @@ const loginSlice = createSlice({
         const EXPIRE_AT_DAYS = 1000 * 60 * 60 * 24 * IN_DAYS;
         date.setTime(date.getTime() + EXPIRE_AT_DAYS);
         const options = { path: "/Tott/", expires: date };
-        CookiesServices.set("jwt", action.payload.jwt, options);
+        CookiesServices.set("jwt", action.payload.user?.api_token, options);
         Toastify({
           title: "Login Successfully",
           description: "Login process has been successfully completed.",
@@ -61,15 +61,15 @@ const loginSlice = createSlice({
 
       if (error.response && error.response.status === 400) {
         Toastify({
-          title: "Login failed",
-          description: "Please check your credentials and try again.",
+          title: "Connection Error",
+          description:
+            "Failed to connect to the server. Please try again later.",
           status: "error",
         });
       } else {
         Toastify({
-          title: "Connection Error",
-          description:
-            "Failed to connect to the server. Please try again later.",
+          title: "Login failed",
+          description: "Please check your credentials and try again.",
           status: "error",
         });
       }

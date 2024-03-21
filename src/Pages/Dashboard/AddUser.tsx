@@ -7,246 +7,245 @@ import {
   Input,
   FormHelperText,
   Button,
-  Text,
   FormControl,
   useColorModeValue,
   Flex,
   Spinner,
+  Box,
+  FormLabel,
 } from "@chakra-ui/react";
-import { UserSignUp } from "../Interface";
+import { UserSignUp } from "../../Interface";
 import { FiUploadCloud } from "react-icons/fi";
 import { CgClose } from "react-icons/cg";
 import { useDispatch, useSelector } from "react-redux";
-import { selectRegister, userRegister } from "../app/feature/RegisterSlice";
+import { selectRegister, userRegister } from "../../app/feature/RegisterSlice";
 import { ThunkDispatch } from "redux-thunk";
-import { RootState } from "../app/Store";
+import { RootState } from "../../app/Store";
 import { AnyAction } from "@reduxjs/toolkit";
-import { countryList } from "../assets/data/Countries";
+import { countryList } from "../../assets/data/Countries";
 import Select, { GroupBase, StylesConfig } from "react-select";
-import { cities } from "../assets/data/Cities";
+import { cities } from "../../assets/data/Cities";
 
-const Signup: React.FC = () => {
-  type MyDispatch = ThunkDispatch<RootState, undefined, AnyAction>;
-  const [isEmail, setIsEmail] = useState<boolean | string>(false);
-  const [isPassword, setIsPassword] = useState<boolean | string>(false);
-  const [isFName, setIsFName] = useState<boolean | string>(false);
-  const [isLName, setIsLName] = useState<boolean | string>(false);
-  const [isConfirmPassword, setIsConfirmPassword] = useState<boolean | string>(
-    false
-  );
-  const [isPhone, setIsPhone] = useState<boolean | string>(false);
-  const [isAge, setIsAge] = useState<boolean | string>(false);
-  const [isGender, setIsGender] = useState<boolean | string>(false);
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const dispatch = useDispatch<MyDispatch>();
-  const { loading } = useSelector(selectRegister);
-
-  const [user, setUser] = React.useState<UserSignUp>({
-    fname: "",
-    lname: "",
-    email: "",
-    password: "",
-    com_password: "",
-    phone: "",
-    age: "",
-    gender: "",
-    city: "",
-    country: "",
-    photo: null,
-  });
-
-  const onChangeHandlerImg = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setSelectedImage(file);
-      setUser((prevUser) => ({ ...prevUser, photo: file }));
-    }
-  };
+const AddUser = () => {
+    type MyDispatch = ThunkDispatch<RootState, undefined, AnyAction>;
+    const [isEmail, setIsEmail] = useState<boolean | string>(false);
+    const [isPassword, setIsPassword] = useState<boolean | string>(false);
+    const [isFName, setIsFName] = useState<boolean | string>(false);
+    const [isLName, setIsLName] = useState<boolean | string>(false);
+    const [isConfirmPassword, setIsConfirmPassword] = useState<boolean | string>(
+      false
+    );
+    const [isPhone, setIsPhone] = useState<boolean | string>(false);
+    const [isAge, setIsAge] = useState<boolean | string>(false);
+    const [isGender, setIsGender] = useState<boolean | string>(false);
+    const [selectedImage, setSelectedImage] = useState<File | null>(null);
+    const dispatch = useDispatch<MyDispatch>();
+    const { loading } = useSelector(selectRegister);
   
-  const handleSelectChange = (
-    selectedOption: { label: string; value: string },
-    type: string
-  ) => {
-    setUser((prevUser) => ({
-      ...prevUser,
-      [type]: selectedOption.value,
-    }));
-  };
-  const onChangeHandler = useCallback(
-    (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-      const { name, value } = event.target;
-      setUser((prevUser) => ({ ...prevUser, [name]: value }));
-
-      if (name === "email") {
-        if (!value.trim() || !/\S+@\S+\.\S+/.test(value)) {
-          setIsEmail(
-            !value.trim() ? "Email is required" : "Invalid email address"
-          );
-        } else {
-          setIsEmail(false);
-        }
-      } else if (name === "password") {
-        const isLengthValid = value.length >= 8;
-        const hasUppercase = /[A-Z]/.test(value);
-        const hasLowercase = /[a-z]/.test(value);
-        const hasNumber = /\d/.test(value);
-        if (
-          !value.trim() ||
-          !(isLengthValid && hasUppercase && hasLowercase && hasNumber)
+    const [user, setUser] = React.useState<UserSignUp>({
+      fname: "",
+      lname: "",
+      email: "",
+      password: "",
+      com_password: "",
+      phone: "",
+      age: "",
+      gender: "",
+      city: "",
+      country: "",
+      photo: null,
+    });
+  
+    const onChangeHandlerImg = (e: ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (file) {
+        setSelectedImage(file);
+        setUser((prevUser) => ({ ...prevUser, photo: file }));
+      }
+    };
+    
+    const handleSelectChange = (
+      selectedOption: { label: string; value: string },
+      type: string
+    ) => {
+      setUser((prevUser) => ({
+        ...prevUser,
+        [type]: selectedOption.value,
+      }));
+    };
+    const onChangeHandler = useCallback(
+      (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = event.target;
+        setUser((prevUser) => ({ ...prevUser, [name]: value }));
+  
+        if (name === "email") {
+          if (!value.trim() || !/\S+@\S+\.\S+/.test(value)) {
+            setIsEmail(
+              !value.trim() ? "Email is required" : "Invalid email address"
+            );
+          } else {
+            setIsEmail(false);
+          }
+        } else if (name === "password") {
+          const isLengthValid = value.length >= 8;
+          const hasUppercase = /[A-Z]/.test(value);
+          const hasLowercase = /[a-z]/.test(value);
+          const hasNumber = /\d/.test(value);
+          if (
+            !value.trim() ||
+            !(isLengthValid && hasUppercase && hasLowercase && hasNumber)
+          ) {
+            setIsPassword(
+              !value.trim()
+                ? "Password is required"
+                : "Password must be at least 8 characters and meet additional criteria (uppercase, lowercase, number)."
+            );
+          } else {
+            setIsPassword(false);
+          }
+        } else if (
+          name === "com_password" &&
+          value.trim() !== user.password.trim()
         ) {
-          setIsPassword(
-            !value.trim()
-              ? "Password is required"
-              : "Password must be at least 8 characters and meet additional criteria (uppercase, lowercase, number)."
+          setIsConfirmPassword("Passwords do not match");
+        } else if (name === "fname") {
+          setIsFName(value.trim() ? false : "First name is required");
+        } else if (name === "lname") {
+          setIsLName(value.trim() ? false : "Last name is required");
+        } else if (name === "com_password") {
+          setIsConfirmPassword(
+            value.trim() ? false : "Confirm Password is required"
           );
-        } else {
-          setIsPassword(false);
+        } else if (name === "phone") {
+          setIsPhone(value.trim() ? false : "Phone is required");
+        } else if (name === "gender") {
+          setIsGender(value.trim() ? false : "Gender is required");
+        } else if (name === "age") {
+          setIsAge(value.trim() ? false : "Age is required");
         }
-      } else if (
-        name === "com_password" &&
-        value.trim() !== user.password.trim()
-      ) {
-        setIsConfirmPassword("Passwords do not match");
-      } else if (name === "fname") {
-        setIsFName(value.trim() ? false : "First name is required");
-      } else if (name === "lname") {
-        setIsLName(value.trim() ? false : "Last name is required");
-      } else if (name === "com_password") {
-        setIsConfirmPassword(
-          value.trim() ? false : "Confirm Password is required"
-        );
-      } else if (name === "phone") {
-        setIsPhone(value.trim() ? false : "Phone is required");
-      } else if (name === "gender") {
-        setIsGender(value.trim() ? false : "Gender is required");
-      } else if (name === "age") {
-        setIsAge(value.trim() ? false : "Age is required");
-      }
-    },
-    [user.password]
-  );
-
-  const onBlurHandler = useCallback(
-    (event: React.FocusEvent<HTMLInputElement>) => {
-      const { name, value } = event.target;
-
-      if (name === "email") {
-        if (!value.trim() || !/\S+@\S+\.\S+/.test(value)) {
-          setIsEmail(
-            !value.trim() ? "Email is required" : "Invalid email address"
-          );
-        } else {
-          setIsEmail(false);
-        }
-      } else if (name === "password") {
-        const isLengthValid = value.length >= 8;
-        const hasUppercase = /[A-Z]/.test(value);
-        const hasLowercase = /[a-z]/.test(value);
-        const hasNumber = /\d/.test(value);
-        if (
-          !value.trim() ||
-          !(isLengthValid && hasUppercase && hasLowercase && hasNumber)
+      },
+      [user.password]
+    );
+  
+    const onBlurHandler = useCallback(
+      (event: React.FocusEvent<HTMLInputElement>) => {
+        const { name, value } = event.target;
+  
+        if (name === "email") {
+          if (!value.trim() || !/\S+@\S+\.\S+/.test(value)) {
+            setIsEmail(
+              !value.trim() ? "Email is required" : "Invalid email address"
+            );
+          } else {
+            setIsEmail(false);
+          }
+        } else if (name === "password") {
+          const isLengthValid = value.length >= 8;
+          const hasUppercase = /[A-Z]/.test(value);
+          const hasLowercase = /[a-z]/.test(value);
+          const hasNumber = /\d/.test(value);
+          if (
+            !value.trim() ||
+            !(isLengthValid && hasUppercase && hasLowercase && hasNumber)
+          ) {
+            setIsPassword(
+              !value.trim()
+                ? "Password is required"
+                : "Password must be at least 8 characters and meet additional criteria (uppercase, lowercase, number)."
+            );
+          } else {
+            setIsPassword(false);
+          }
+        } else if (
+          name === "com_password" &&
+          value.trim() !== user.password.trim()
         ) {
-          setIsPassword(
-            !value.trim()
-              ? "Password is required"
-              : "Password must be at least 8 characters and meet additional criteria (uppercase, lowercase, number)."
+          setIsConfirmPassword("Passwords do not match");
+        } else if (name === "fname") {
+          setIsFName(value.trim() ? false : "First name is required");
+        } else if (name === "lname") {
+          setIsLName(value.trim() ? false : "Last name is required");
+        } else if (name === "com_password") {
+          setIsConfirmPassword(
+            value.trim() ? false : "Confirm Password is required"
           );
-        } else {
-          setIsPassword(false);
+        } else if (name === "phone") {
+          setIsPhone(value.trim() ? false : "Phone is required");
+        } else if (name === "gender") {
+          setIsGender(value.trim() ? false : "Gender is required");
+        } else if (name === "age") {
+          setIsAge(value.trim() ? false : "Age is required");
         }
-      } else if (
-        name === "com_password" &&
-        value.trim() !== user.password.trim()
-      ) {
-        setIsConfirmPassword("Passwords do not match");
-      } else if (name === "fname") {
-        setIsFName(value.trim() ? false : "First name is required");
-      } else if (name === "lname") {
-        setIsLName(value.trim() ? false : "Last name is required");
-      } else if (name === "com_password") {
-        setIsConfirmPassword(
-          value.trim() ? false : "Confirm Password is required"
-        );
-      } else if (name === "phone") {
-        setIsPhone(value.trim() ? false : "Phone is required");
-      } else if (name === "gender") {
-        setIsGender(value.trim() ? false : "Gender is required");
-      } else if (name === "age") {
-        setIsAge(value.trim() ? false : "Age is required");
-      }
-    },
-    [user.password]
-  );
-
-  const handleSubmit = useCallback(
-    async (event: React.FormEvent) => {
-      event.preventDefault();
-
-      if (!user.email.trim()) {
-        setIsEmail("Email is required");
-      }
-      if (!user.fname.trim()) {
-        setIsFName("First name is required");
-      }
-      if (!user.lname.trim()) {
-        setIsLName("Last name is required");
-      }
-      if (!user.age.trim()) {
-        setIsAge("Age is required");
-      }
-      if (!user.com_password.trim()) {
-        setIsConfirmPassword("Confirm Password is required");
-      }
-      if (!user.password.trim()) {
-        setIsPassword("Password is required");
-      }
-      if (!user.gender.trim()) {
-        setIsGender("Gender is required");
-      }
-      if (!user.phone.trim()) {
-        setIsPhone("Phone is required");
-        return;
-      }
-
-      dispatch(userRegister(user));
-      console.log(user);
-    },
-    [dispatch, user]
-  );
-  const customStyles: StylesConfig<
-    { label: string; value: string },
-    false,
-    GroupBase<{ label: string; value: string }>
-  > = {
-    control: (base) => ({
-      ...base,
-      background: useColorModeValue("#eee", "white"),
-      border: "none",
-    }),
-    option: (provided) => ({
-      ...provided,
-      color: useColorModeValue("#555", "black"),
-    }),
-  };
+      },
+      [user.password]
+    );
+  
+    const handleSubmit = useCallback(
+      async (event: React.FormEvent) => {
+        event.preventDefault();
+  
+        if (!user.email.trim()) {
+          setIsEmail("Email is required");
+        }
+        if (!user.fname.trim()) {
+          setIsFName("First name is required");
+        }
+        if (!user.lname.trim()) {
+          setIsLName("Last name is required");
+        }
+        if (!user.age.trim()) {
+          setIsAge("Age is required");
+        }
+        if (!user.com_password.trim()) {
+          setIsConfirmPassword("Confirm Password is required");
+        }
+        if (!user.password.trim()) {
+          setIsPassword("Password is required");
+        }
+        if (!user.gender.trim()) {
+          setIsGender("Gender is required");
+        }
+        if (!user.phone.trim()) {
+          setIsPhone("Phone is required");
+          return;
+        }
+  
+        dispatch(userRegister(user));
+        console.log(user);
+      },
+      [dispatch, user]
+    );
+    const customStyles: StylesConfig<
+      { label: string; value: string },
+      false,
+      GroupBase<{ label: string; value: string }>
+    > = {
+      control: (base) => ({
+        ...base,
+        background: useColorModeValue("#eee", "white"),
+        border: "none",
+      }),
+      option: (provided) => ({
+        ...provided,
+        color: useColorModeValue("#555", "black"),
+      }),
+    };
   return (
-    <form className="sign-up-form" onSubmit={handleSubmit}>
-      <Text className="title" color={useColorModeValue("black.500", "white")}>
-        Sign Up
-      </Text>
+    <Box className="flex flex-col text-2xl  rounded-xl ">
+    <form  onSubmit={handleSubmit} className="p-0">
       <Flex w={"100%"} justifyContent={"space-between"} gap={"12px"}>
-        <FormControl>
+        <FormControl mb={'4'}>
+        <FormLabel>First Name</FormLabel>
           <Input
             type="text"
-            className="input"
             placeholder="Fname"
             name="fname"
             isInvalid={!!isFName}
             onBlur={onBlurHandler}
             value={user.fname}
             onChange={onChangeHandler}
-            bg={useColorModeValue("#eee", "white")}
             autoComplete="off"
+            border={"1px solid"}
           />
           {isFName && (
             <FormHelperText
@@ -258,18 +257,18 @@ const Signup: React.FC = () => {
             </FormHelperText>
           )}
         </FormControl>
-        <FormControl>
+        <FormControl mb={'4'}>
+        <FormLabel>Last Name</FormLabel>
           <Input
             type="text"
-            className="input"
             placeholder="Lname"
             name="lname"
             isInvalid={!!isLName}
             onBlur={onBlurHandler}
             value={user.lname}
             onChange={onChangeHandler}
-            bg={useColorModeValue("#eee", "white")}
             autoComplete="off"
+            border={"1px solid"}
           />
           {isFName && (
             <FormHelperText
@@ -284,17 +283,18 @@ const Signup: React.FC = () => {
       </Flex>
       <Flex w={"100%"} justifyContent={"space-between"} gap={"12px"}>
         <FormControl>
+        <FormLabel>Age</FormLabel>
+
           <Input
             type="text"
-            className="input"
             placeholder="age"
             name="age"
             isInvalid={!!isAge}
             onBlur={onBlurHandler}
             value={user.age}
             onChange={onChangeHandler}
-            bg={useColorModeValue("#eee", "white")}
             autoComplete="off"
+            border={"1px solid"}
           />
           {isAge && (
             <FormHelperText
@@ -307,8 +307,10 @@ const Signup: React.FC = () => {
           )}
         </FormControl>
         <FormControl>
+        <FormLabel>Gender</FormLabel>
+
           <Select
-            className="mt-[15px]"
+            className="mt-[-2px]"
             name="gender"
             value={
               user.gender ? { label: user.gender, value: user.gender } : null
@@ -321,7 +323,6 @@ const Signup: React.FC = () => {
               { label: "Female", value: "Female" },
             ]}
             placeholder="Select Gender"
-            styles={customStyles}
             isSearchable
           />
           {isGender && (
@@ -337,8 +338,10 @@ const Signup: React.FC = () => {
       </Flex>
       <Flex w={"100%"} justifyContent={"space-between"} gap={"12px"}>
         <FormControl>
+        <FormLabel>Country</FormLabel>
+
           <Select
-            className="mt-[15px]"
+            className="mt-[-2px]"
             name="country"
             value={
               user.country ? { label: user.country, value: user.country } : null
@@ -351,13 +354,14 @@ const Signup: React.FC = () => {
               value: country,
             }))}
             placeholder="Select Country"
-            styles={customStyles}
             isSearchable
           />
         </FormControl>
         <FormControl>
+        <FormLabel>City</FormLabel>
+
           <Select
-            className="mt-[15px]"
+            className="mt-[-2px]"
             name="city"
             value={user.city ? { label: user.city, value: user.city } : null}
             onChange={(selectedOption) =>
@@ -372,23 +376,23 @@ const Signup: React.FC = () => {
                 : []
             }
             placeholder="Select City"
-            styles={customStyles}
             isSearchable
           />
         </FormControl>
       </Flex>
       <FormControl>
+      <FormLabel>Phone</FormLabel>
+
         <Input
           type="text"
-          className="input"
           placeholder="Phone"
           name="phone"
           isInvalid={!!isPhone}
           onBlur={onBlurHandler}
           value={user.phone}
           onChange={onChangeHandler}
-          bg={useColorModeValue("#eee", "white")}
           autoComplete="off"
+          border={"1px solid"}
         />
         {isPhone && (
           <FormHelperText
@@ -401,17 +405,19 @@ const Signup: React.FC = () => {
         )}
       </FormControl>
       <FormControl>
+      <FormLabel>Email</FormLabel>
+
         <Input
           type="email"
-          className="input"
           placeholder="Email"
           name="email"
           isInvalid={!!isEmail}
           onBlur={onBlurHandler}
           value={user.email}
           onChange={onChangeHandler}
-          bg={useColorModeValue("#eee", "white")}
           autoComplete="off"
+          border={"1px solid"}
+
         />
         {isEmail && (
           <FormHelperText
@@ -424,17 +430,19 @@ const Signup: React.FC = () => {
         )}
       </FormControl>
       <FormControl>
+      <FormLabel>Password</FormLabel>
+
         <Input
           type="text"
-          className="input"
           placeholder="Password"
           name="password"
           isInvalid={!!isPassword}
           onBlur={onBlurHandler}
           value={user.password}
           onChange={onChangeHandler}
-          bg={useColorModeValue("#eee", "white")}
           autoComplete="off"
+          border={"1px solid"}
+
         />
         {isPassword && (
           <FormHelperText
@@ -447,17 +455,19 @@ const Signup: React.FC = () => {
         )}
       </FormControl>
       <FormControl>
+      <FormLabel>Confirm Password</FormLabel>
+
         <Input
           type="text"
-          className="input"
           placeholder="Confirm Password"
           name="com_password"
           isInvalid={!!isConfirmPassword}
           onBlur={onBlurHandler}
           value={user.com_password}
           onChange={onChangeHandler}
-          bg={useColorModeValue("#eee", "white")}
           autoComplete="off"
+          border={"1px solid"}
+
         />
         {isConfirmPassword && (
           <FormHelperText
@@ -470,10 +480,7 @@ const Signup: React.FC = () => {
         )}
       </FormControl>
       <div
-        className={`w-[100%]  rounded-lg mt-5  flex flex-col justify-center items-center ${useColorModeValue(
-          "bg-[#eee] text-black",
-          "bg-[#fff] text-black"
-        )}`}
+        className={`w-[100%]  rounded-lg mt-5  flex flex-col justify-center items-center border border-dotted border-black`}
       >
         {selectedImage ? (
           <div className="relative  py-5">
@@ -510,8 +517,9 @@ const Signup: React.FC = () => {
           </>
         )}
       </div>
-      <div className="box-btn">
+      <Box className="flex justify-end">
         <Button
+        className="flex justify-end items-end"
           type="submit"
           mt={"25px"}
           bg={
@@ -523,10 +531,9 @@ const Signup: React.FC = () => {
             isAge ||
             isPhone
               ? "red.500"
-              : useColorModeValue("orange.500", "orange.400")
+              : useColorModeValue("black", "black")
           }
           color={"white"}
-          // isLoading={loading}
           _hover={{
             bg:
               isEmail ||
@@ -537,7 +544,7 @@ const Signup: React.FC = () => {
               isAge ||
               isPhone
                 ? "red.400"
-                : useColorModeValue("orange.400", "orange.500"),
+                : useColorModeValue("black", "black"),
           }}
         >
           {loading ? (
@@ -549,9 +556,10 @@ const Signup: React.FC = () => {
             "Signup"
           )}
         </Button>
-      </div>
+      </Box>
     </form>
+    </Box>
   );
 };
 
-export default React.memo(Signup);
+export default AddUser;

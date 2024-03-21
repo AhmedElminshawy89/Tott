@@ -30,15 +30,16 @@ import { useEffect, useState } from "react";
 
 interface Props {
   children: React.ReactNode;
-  to:string
+  to: string
 }
-const Links = [{ name: "Acount", to: "/account/MyPersonalInfo" }];
+const Links = [{ name: "Acount", to: "/account/MyPersonalInfo" },
+{ name: "Dashboard", to: "/dashboard/home" }];
 const NavLinks = (props: Props) => {
   const { onClose } = useDisclosure();
   const handleCloseNav = () => {
     onClose();
   };
-  const { children , to } = props;
+  const { children, to } = props;
 
   return (
     <Box
@@ -92,9 +93,8 @@ export default function Navbar() {
   return (
     <>
       <Box
-        className={`min-sm:px-4 px-1 bg-[#CA933F] ${
-          isScrolled ? "navScroll shadow-2xl" : ""
-        }`}
+        className={`min-sm:px-4 px-1 bg-[#CA933F] ${isScrolled ? "navScroll shadow-2xl" : ""
+          }`}
       >
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <IconButton
@@ -174,8 +174,8 @@ export default function Navbar() {
                 >
                   <Avatar
                     size={"sm"}
-                    // src={"http://localhost:1337/uploads/me_8dee4a849c.jpg"}
-                    // src={"http://localhost:1337/uploads/me_8dee4a849c.jpg"}
+                  // src={"http://localhost:1337/uploads/me_8dee4a849c.jpg"}
+                  // src={"http://localhost:1337/uploads/me_8dee4a849c.jpg"}
                   />
                 </MenuButton>
                 <MenuList>

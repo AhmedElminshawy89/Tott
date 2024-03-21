@@ -11,6 +11,15 @@ import Plans from "../Pages/Account/Plans";
 import Favourites from "../Pages/Account/Favourites";
 import Aboutus from "../Pages/Account/Aboutus";
 import NotFound from "../Pages/NotFound";
+import DashboardLayout from "../Pages/Dashboard/DashboardLayout";
+import Dashboard from "../Pages/Dashboard/Home";
+import Category from "../Pages/Dashboard/Category";
+import City from "../Pages/Dashboard/City";
+import Places from "../Pages/Dashboard/Places";
+import AddPlaces from "../Pages/Dashboard/AddPlaces";
+import Review from "../Pages/Dashboard/Review";
+import Setting from "../Pages/Dashboard/Setting";
+import ProfilePage from "../Pages/Dashboard/Profile";
 
 const Routing = () => {
   return (
@@ -32,6 +41,16 @@ const Routing = () => {
           <Route path="Plans" element={<Plans />} />
           <Route path="Favourites" element={<Favourites />} />
           <Route path="Aboutus" element={<Aboutus />} />
+        </Route>
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route index path="home" element={<Dashboard />} />
+          <Route path="category" element={<Category />} />
+          <Route path="city" element={<City />} />
+          <Route path="place" element={<Places />} />
+          <Route path="addplace" element={<AddPlaces />} />
+          <Route path="review" element={<Review />} />
+          <Route path="setting" element={<Setting />} />
+          <Route path="profile" element={<ProfilePage />} />
         </Route>
         <Route path="/login" element={<Registration />} />
         <Route path="*" element={<NotFound />} />
