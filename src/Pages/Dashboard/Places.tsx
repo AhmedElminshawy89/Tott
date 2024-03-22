@@ -28,9 +28,9 @@ import {
         fontSize={"18px"}
         my={12}
       >
-        <Table variant="simple">
+        <Table variant="solid" border={'1px solid #eee'}>
           <TableCaption>Places</TableCaption>
-          <Thead>
+          <Thead bg={'gray.100'}>
             <Tr>
               <Th>ID</Th>
               <Th>Place Name</Th>
@@ -44,7 +44,7 @@ import {
             </Tr>
           </Thead>
           <Tbody>
-            <Tr>
+            <Tr border={'1px solid #eee'}>
               <Td>1</Td>
               <Td>Svsj</Td>
               <Td>Hotel</Td>
@@ -69,7 +69,7 @@ import {
               </Td>
             </Tr>
           </Tbody>
-          <Tfoot>
+          <Tfoot bg={'gray.100'}>
             <Tr>
             <Th>ID</Th>
               <Th>Place Name</Th>

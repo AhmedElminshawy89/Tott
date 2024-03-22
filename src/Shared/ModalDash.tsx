@@ -7,6 +7,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { ReactNode } from "react";
@@ -50,7 +51,7 @@ const ModelDash = ({
         isCentered
       >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent bg={useColorModeValue("white", "white")}>
           <ModalHeader color={"#000"}>{title}</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6} color={"#000"}>

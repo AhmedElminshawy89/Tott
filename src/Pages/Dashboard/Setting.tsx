@@ -25,7 +25,7 @@ const Setting = () => {
       variant="unstyled"
       isLazy 
     >
-      <TabList>
+      <TabList color={'#000'}>
         <Tab onClick={() => setTabIndex(0)}>Add Admin</Tab>
         <Tab onClick={() => setTabIndex(1)}>Add User</Tab>
         <Tab onClick={() => setTabIndex(2)}>Admins</Tab>

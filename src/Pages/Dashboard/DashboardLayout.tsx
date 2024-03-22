@@ -76,9 +76,9 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   return (
     <Box
       transition="3s ease"
-      bg={useColorModeValue("#ca933f", "black")}
+      bg={useColorModeValue("#ca933f", "#ca933f")}
       borderRight="1px"
-      borderRightColor={useColorModeValue("#ca933f", "black")}
+      borderRightColor={useColorModeValue("#ca933f", "#ca933f")}
       w={"15rem"}
       pos="fixed"
       h="full"
@@ -97,11 +97,14 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         >
           <Text
             fontSize="4xl"
-            fontFamily="monospace"
-            className="flex items-center"
+            fontFamily={"Inria Serif"}
             mb={10}
+            className="min-sm:text-5xl text-3xl flex items-center"
+
+            color={'black'}
+
           >
-            <img src={img} className="w-10 h-10 mr-2" />
+            <img src={img} className=" min-sm:h-[50px] min-sm:w-[50px] h-[30px] w-[30px] mr-2"/>
             TUT
           </Text>
         </Flex>
@@ -175,9 +178,9 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       px={{ base: 4, md: 4 }}
       height="20"
       alignItems="center"
-      bg={useColorModeValue("#ca933f", "black")}
+      bg={useColorModeValue("#ca933f", "#ca933f")}
       borderBottomWidth="1px"
-      borderBottomColor={useColorModeValue("#ca933f", "black")}
+      borderBottomColor={useColorModeValue("#ca933f", "#ca933f")}
       justifyContent={{ base: "space-between", md: "flex-end" }}
       {...rest}
     >
@@ -192,10 +195,13 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       <Text
         display={{ base: "flex", md: "none" }}
         fontSize="4xl"
-        fontFamily="monospace"
-        className="flex items-center"
+        fontFamily={"Inria Serif"}
+        color={'black'}
+        className="min-sm:text-5xl text-3xl flex items-center"
+
       >
-        <img src={img} className="w-10 h-10 mr-2" />
+        <img src={img} className=" min-sm:h-[50px] min-sm:w-[50px] h-[30px] w-[30px] mr-2"
+/>
         TUT
       </Text>
 
@@ -231,7 +237,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                 </Box>
               </HStack>
             </MenuButton>
-            <MenuList bg={useColorModeValue("White ", "black")}>
+            <MenuList bg={useColorModeValue("White ", "White")}>
               {/* <MenuItem>Profile</MenuItem> */}
               <MenuItem as={NavLink} to={"setting"}>
                 Settings
@@ -253,7 +259,7 @@ const DashboardLayout = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box minH="100vh" bg={useColorModeValue("white", "black")}>
+    <Box minH="100vh" bg={useColorModeValue("white", "White")}>
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}

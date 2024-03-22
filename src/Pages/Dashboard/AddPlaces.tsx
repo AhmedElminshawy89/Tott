@@ -101,10 +101,11 @@ const AddPlaces = () => {
         <>
           <Box className="flex gap-3 sm:flex-row flex-col">
             <FormControl mb={4}>
-              <FormLabel>Place name</FormLabel>
+              <FormLabel color={'#000'}>Place name</FormLabel>
               <Input
                 placeholder="Place name"
-                border={"1px solid"}
+                border={"1px solid #eee"}
+                color={'#000'}
                 name="placeName"
                 value={placeData.placeName}
                 onChange={onChangeHandler}
@@ -120,10 +121,11 @@ const AddPlaces = () => {
               )}
             </FormControl>
             <FormControl mb={4}>
-              <FormLabel>Category</FormLabel>
+              <FormLabel color={'#000'}>Category</FormLabel>
               <Select
+                        border={"1px solid #eee"}
+                        color={'#000'}
                 placeholder="Select Category"
-                border={"1px solid"}
                 value={placeData.categoryName}
                 onChange={(e) =>
                   handleSelectChange(
@@ -147,10 +149,11 @@ const AddPlaces = () => {
               )}
             </FormControl>
             <FormControl mb={4}>
-              <FormLabel>City Name</FormLabel>
+              <FormLabel color={'#000'}>City Name</FormLabel>
               <Select
                 placeholder="Select City"
-                border={"1px solid"}
+                border={"1px solid #eee"}
+                color={'#000'}
                 value={placeData.cityName}
                 onChange={(e) =>
                   handleSelectChange(
@@ -175,11 +178,12 @@ const AddPlaces = () => {
             </FormControl>
           </Box>
           <Box className="flex gap-3 sm:flex-row flex-col">
-           <FormControl mb={4}>
-              <FormLabel>Location</FormLabel>
+            <FormControl mb={4}>
+              <FormLabel color={'#000'}>Location</FormLabel>
               <Input
                 placeholder="Location"
-                border={"1px solid"}
+                border={"1px solid #eee"}
+                color={'#000'}
                 name="location"
                 value={placeData.location}
                 onChange={onChangeHandler}
@@ -195,11 +199,11 @@ const AddPlaces = () => {
               )}
             </FormControl>
             <FormControl mb={4}>
-              <FormLabel>Rate</FormLabel>
+              <FormLabel color={'#000'}>Rate</FormLabel>
               <Select
                 placeholder="Select Rate"
-                border={"1px solid"}
-                value={placeData.initRate}
+                border={"1px solid #eee"}
+                color={'#000'}                value={placeData.initRate}
                 onChange={(e) =>
                   handleSelectChange(
                     { label: e.target.value, value: e.target.value },
@@ -225,13 +229,13 @@ const AddPlaces = () => {
             </FormControl>
           </Box>
           <FormControl mb={4}>
-            <FormLabel>Description</FormLabel>
+            <FormLabel color={'#000'}>Description</FormLabel>
             <Textarea
               resize={"none"}
               height={"100px"}
               placeholder="Description"
-              border={"1px solid"}
-              name="description"
+              border={"1px solid #eee"}
+              color={'#000'}              name="description"
               value={placeData.description}
               onChange={onChangeHandlerTextarea}
             />
@@ -245,53 +249,48 @@ const AddPlaces = () => {
               </FormHelperText>
             )}
           </FormControl>
-          <FormLabel>Image</FormLabel>
+          <FormLabel color={'#000'}>Image</FormLabel>
           <div
-            className="w-[100%] h-[100%] bg-transparent text-center  rounded-lg 
-        flex flex-col justify-center items-center border-2 border-dotted border-primary"
-          >
-            {selectedImage ? (
-              <div className="relative  py-5">
-                <img
-                  className="w-[100%] h-[160px]"
-                  src={URL.createObjectURL(selectedImage)}
-                  alt="Selected"
+          className="w-[100%] bg-transparent text-center  rounded-lg 
+        flex flex-col justify-center items-center border-2 border-dotted border-[#eee]"
+        >
+          {selectedImage ? (
+            <div className="relative  py-5">
+              <img
+                className="w-[100%] h-[160px]"
+                src={URL.createObjectURL(selectedImage)}
+                alt="Selected"
+              />
+              <p
+                onClick={() => setSelectedImage(null)}
+                className="cursor-pointer w-[25px] h-[25px] absolute top-2 -right-4 w-25 h-25 bg-[#000] text-white rounded-bl-xl rounded-tr-xl flex justify-center items-center"
+              >
+                <CgClose />
+              </p>
+            </div>
+          ) : (
+            <>
+              <FormControl>
+                <Input
+                  height="423%"
+                  opacity={0}
+                  type="file"
+                  className="v"
+                  placeholder="photo"
+                  name="Image"
+                  onChange={onChangeHandlerImg}
+                  bg={useColorModeValue("transparent", "transparent")}
+                  autoComplete="off"
                 />
-                <p
-                  onClick={() => {
-                    setSelectedImage(null);
-                    setPlaceData((prevCourseData) => ({
-                      ...prevCourseData,
-                      Image: null,
-                    }));
-                  }}
-                  className="cursor-pointer w-[25px] h-[25px] absolute top-2 -right-4 w-25 h-25 bg-[#000] text-white rounded-bl-xl rounded-tr-xl flex justify-center items-center"
-                >
-                  <CgClose />
-                </p>
-              </div>
-            ) : (
-              <>
-                <FormControl>
-                  <Input
-                    height="423%"
-                    opacity={0}
-                    type="file"
-                    placeholder="photo"
-                    name="identifier"
-                    onChange={onChangeHandlerImg}
-                    bg={useColorModeValue("transparent", "transparent")}
-                    autoComplete="off"
-                  />
-                </FormControl>
-                <p className="text-2xl font-medium">Upload Image</p>
-                <em className=" text-gray-500">
-                  (Upload only jpg, jpeg, and png images, please)
-                </em>
-                <FiUploadCloud className="mb-8 mt-4 text-2xl" />
-              </>
-            )}
-          </div>
+              </FormControl>
+              <p className="text-2xl font-medium text-black">Upload Image</p>
+              <em className=" text-gray-500">
+                (Upload only jpg, jpeg, and png images, please)
+              </em>
+              <FiUploadCloud className="mb-8 mt-4 text-2xl text-black" />
+            </>
+          )}
+        </div>
           <FormControl>
             {errors.Image && (
               <FormHelperText

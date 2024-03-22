@@ -61,12 +61,14 @@ import { ICategoryData } from "../../Interface";
           >
             <form onSubmit={handleSubmit} className="p-0">
               <FormControl mb={4}>
-                <FormLabel>Category name</FormLabel>
+                <FormLabel color={'#000'}>Category name</FormLabel>
                 <Input
                   placeholder="Course name"
                   onChange={onChangeHandler}
                   value={categoryData.categoryName}
                   name="categoryName"
+                  border={"1px solid #eee"}
+                  color={'#000'}
                 />
                 {errors.categoryName && (
                   <FormHelperText
@@ -92,9 +94,9 @@ import { ICategoryData } from "../../Interface";
           fontSize={"18px"}
           my={12}
         >
-          <Table variant="simple">
+          <Table variant="solid" border={'1px solid #eee'}>
             <TableCaption>Categories</TableCaption>
-            <Thead>
+            <Thead bg={'gray.100'}>
               <Tr>
                 <Th>ID</Th>
                 <Th>Category Name</Th>
@@ -102,7 +104,7 @@ import { ICategoryData } from "../../Interface";
               </Tr>
             </Thead>
             <Tbody>
-              <Tr>
+              <Tr border={'1px solid #eee'}>
                 <Td>1</Td>
                 <Td>Primary</Td>
                 <Td>
@@ -113,7 +115,7 @@ import { ICategoryData } from "../../Interface";
                 </Td>
               </Tr>
             </Tbody>
-            <Tfoot>
+            <Tfoot bg={'gray.100'}>
               <Tr>
               <Th>ID</Th>
                 <Th>Category Name</Th>

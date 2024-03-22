@@ -84,12 +84,14 @@ import { ICityData } from "../../Interface";
           >
             <form onSubmit={handleSubmit} className="p-0">
               <FormControl mb={4}>
-                <FormLabel>City name</FormLabel>
+                <FormLabel color={'#000'}>City name</FormLabel>
                 <Input
                   placeholder="City name"
                   onChange={onChangeHandler}
                   value={cityData.cityName}
                   name="cityName"
+                  border={"1px solid #eee"}
+                  color={'#000'}
                 />
                 {errors.cityName && (
                   <FormHelperText
@@ -102,12 +104,14 @@ import { ICityData } from "../../Interface";
                 )}
               </FormControl>
               <FormControl mb={4}>
-                <FormLabel>Description</FormLabel>
+                <FormLabel color={'#000'}>Description</FormLabel>
                 <Input
                   placeholder="Description"
                   onChange={onChangeHandler}
                   value={cityData.description}
                   name="description"
+                  border={"1px solid #eee"}
+                  color={'#000'}
                 />
                 {errors.description && (
                   <FormHelperText
@@ -121,52 +125,46 @@ import { ICityData } from "../../Interface";
               </FormControl>
               <FormLabel>Image</FormLabel>
               <div
-                className="w-[100%] bg-white rounded-lg 
-                flex flex-col justify-center items-center border-2 border-dotted"
+          className="w-[100%] bg-transparent text-center  rounded-lg 
+        flex flex-col justify-center items-center border-2 border-dotted border-[#eee]"
+        >
+          {selectedImage ? (
+            <div className="relative  py-5">
+              <img
+                className="w-[100%] h-[160px]"
+                src={URL.createObjectURL(selectedImage)}
+                alt="Selected"
+              />
+              <p
+                onClick={() => setSelectedImage(null)}
+                className="cursor-pointer w-[25px] h-[25px] absolute top-2 -right-4 w-25 h-25 bg-[#000] text-white rounded-bl-xl rounded-tr-xl flex justify-center items-center"
               >
-                {selectedImage ? (
-                  <div className="relative  py-5">
-                    <img
-                      className="w-[100%] h-[160px]"
-                      src={URL.createObjectURL(selectedImage)}
-                      alt="Selected"
-                    />
-                    <p
-                      onClick={() => {
-                        setSelectedImage(null);
-                        setCityDataData((prevCategoryData) => ({
-                          ...prevCategoryData,
-                          Image: null,
-                        }));
-                      }}
-                      className="cursor-pointer w-[25px] h-[25px] absolute top-2 -right-4 w-25 h-25 bg-[#000] text-white rounded-bl-xl rounded-tr-xl flex justify-center items-center"
-                    >
-                      <CgClose />
-                    </p>
-                  </div>
-                ) : (
-                  <>
-                    <FormControl>
-                      <Input
-                        height="423%"
-                        opacity={0}
-                        type="file"
-                        className="v"
-                        placeholder="photo"
-                        name="identifier"
-                        onChange={onChangeHandlerImg}
-                        bg={useColorModeValue("white", "white")}
-                        autoComplete="off"
-                      />
-                    </FormControl>
-                    <p className="text-2xl font-medium">Upload Imge</p>
-                    <em className=" text-gray-500">
-                      (Upload only jpg, jpeg, and png images, please)
-                    </em>
-                    <FiUploadCloud className="mb-8 mt-4 text-2xl" />
-                  </>
-                )}
-              </div>
+                <CgClose />
+              </p>
+            </div>
+          ) : (
+            <>
+              <FormControl>
+                <Input
+                  height="423%"
+                  opacity={0}
+                  type="file"
+                  className="v"
+                  placeholder="photo"
+                  name="Image"
+                  onChange={onChangeHandlerImg}
+                  bg={useColorModeValue("transparent", "transparent")}
+                  autoComplete="off"
+                />
+              </FormControl>
+              <p className="text-2xl font-medium text-black">Upload Image</p>
+              <em className=" text-gray-500">
+                (Upload only jpg, jpeg, and png images, please)
+              </em>
+              <FiUploadCloud className="mb-8 mt-4 text-2xl text-black" />
+            </>
+          )}
+        </div>
               <FormControl>
                 {errors.Image && (
                   <FormHelperText
@@ -192,9 +190,9 @@ import { ICityData } from "../../Interface";
           fontSize={"18px"}
           my={12}
         >
-          <Table variant="simple">
+          <Table variant="solid" border={'1px solid #eee'}>
             <TableCaption>City</TableCaption>
-            <Thead>
+            <Thead bg={'gray.100'}>
               <Tr>
                 <Th>ID</Th>
                 <Th>Category Name</Th>
@@ -204,7 +202,7 @@ import { ICityData } from "../../Interface";
               </Tr>
             </Thead>
             <Tbody>
-              <Tr>
+              <Tr border={'1px solid #eee'}>
                 <Td>1</Td>
                 <Td>Alexandria</Td>
                 <Td>Lorem ipsum dolor sit amet ...</Td>
@@ -219,7 +217,7 @@ import { ICityData } from "../../Interface";
                 </Td>
               </Tr>
             </Tbody>
-            <Tfoot>
+            <Tfoot bg={'gray.100'}>
               <Tr>
                 <Th>ID</Th>
                 <Th>Category Name</Th>

@@ -27,10 +27,10 @@ const Admins = () => {
       fontSize={"18px"}
       my={12}
     >
-      <Table variant="simple">
+      <Table variant="solid" border={'1px solid #eee'}>
         <TableCaption>Admins</TableCaption>
         <Thead>
-          <Tr>
+          <Tr bg="gray.100">
             <Th>ID</Th>
             <Th>First Name</Th>
             <Th>Last Name</Th>
@@ -42,7 +42,7 @@ const Admins = () => {
           </Tr>
         </Thead>
         <Tbody>
-          <Tr>
+          <Tr  border={'1px solid #eee'}>
             <Td>1</Td>
             <Td>Ahmed</Td>
             <Td>Ahmed Elsaied</Td>
@@ -67,7 +67,7 @@ const Admins = () => {
           </Tr>
         </Tbody>
         <Tfoot>
-          <Tr>
+          <Tr bg="gray.100">
             <Th>ID</Th>
             <Th>First Name</Th>
             <Th>Last Name</Th>

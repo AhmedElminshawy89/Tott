@@ -23,9 +23,9 @@ const Review = () => {
       fontSize={"18px"}
       my={12}
     >
-      <Table variant="simple">
+      <Table variant="solid" border={'1px solid #eee'}>
         <TableCaption>Review</TableCaption>
-        <Thead>
+        <Thead bg="gray.100">
           <Tr>
             <Th>ID</Th>
             <Th>UserName</Th>
@@ -35,7 +35,7 @@ const Review = () => {
           </Tr>
         </Thead>
         <Tbody>
-          <Tr>
+          <Tr border={'1px solid #eee'}>
             <Td>1</Td>
             <Td>Ahmed</Td>
             <Td>2</Td>
@@ -45,7 +45,7 @@ const Review = () => {
             </Td>
           </Tr>
         </Tbody>
-        <Tfoot>
+        <Tfoot bg="gray.100">
           <Tr>
             <Th>ID</Th>
             <Th>UserName</Th>

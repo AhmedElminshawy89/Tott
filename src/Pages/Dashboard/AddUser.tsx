@@ -220,7 +220,7 @@ const AddUser = () => {
     <form  onSubmit={handleSubmit} className="p-0">
       <Flex w={"100%"} justifyContent={"space-between"} gap={"12px"}>
         <FormControl mb={'4'}>
-        <FormLabel>First Name</FormLabel>
+        <FormLabel color={'#000'}>First Name</FormLabel>
           <Input
             type="text"
             placeholder="Fname"
@@ -230,8 +230,8 @@ const AddUser = () => {
             value={user.fname}
             onChange={onChangeHandler}
             autoComplete="off"
-            border={"1px solid"}
-          />
+            border={"1px solid #eee"}
+            color={'#000'}          />
           {isFName && (
             <FormHelperText
               color={"red.500"}
@@ -243,7 +243,7 @@ const AddUser = () => {
           )}
         </FormControl>
         <FormControl mb={'4'}>
-        <FormLabel>Last Name</FormLabel>
+        <FormLabel color={'#000'}>Last Name</FormLabel>
           <Input
             type="text"
             placeholder="Lname"
@@ -253,7 +253,8 @@ const AddUser = () => {
             value={user.lname}
             onChange={onChangeHandler}
             autoComplete="off"
-            border={"1px solid"}
+            border={"1px solid #eee"}
+            color={'#000'}
           />
           {isFName && (
             <FormHelperText
@@ -268,7 +269,7 @@ const AddUser = () => {
       </Flex>
       <Flex w={"100%"} justifyContent={"space-between"} gap={"12px"}>
         <FormControl>
-        <FormLabel>Age</FormLabel>
+        <FormLabel color={'#000'}>Age</FormLabel>
 
           <Input
             type="text"
@@ -279,7 +280,8 @@ const AddUser = () => {
             value={user.age}
             onChange={onChangeHandler}
             autoComplete="off"
-            border={"1px solid"}
+            border={"1px solid #eee"}
+            color={'#000'}
           />
           {isAge && (
             <FormHelperText
@@ -293,7 +295,6 @@ const AddUser = () => {
         </FormControl>
         <FormControl>
         <FormLabel>Gender</FormLabel>
-
           <Select
             className="mt-[-2px]"
             name="gender"
@@ -309,6 +310,7 @@ const AddUser = () => {
             ]}
             placeholder="Select Gender"
             isSearchable
+            
           />
           {isGender && (
             <FormHelperText
@@ -366,7 +368,7 @@ const AddUser = () => {
         </FormControl>
       </Flex>
       <FormControl>
-      <FormLabel>Phone</FormLabel>
+      <FormLabel color={'#000'}>Phone</FormLabel>
 
         <Input
           type="text"
@@ -377,7 +379,8 @@ const AddUser = () => {
           value={user.phone}
           onChange={onChangeHandler}
           autoComplete="off"
-          border={"1px solid"}
+          border={"1px solid #eee"}
+          color={'#000'}
         />
         {isPhone && (
           <FormHelperText
@@ -390,7 +393,7 @@ const AddUser = () => {
         )}
       </FormControl>
       <FormControl>
-      <FormLabel>Email</FormLabel>
+      <FormLabel color={'#000'}>Email</FormLabel>
 
         <Input
           type="email"
@@ -401,8 +404,8 @@ const AddUser = () => {
           value={user.email}
           onChange={onChangeHandler}
           autoComplete="off"
-          border={"1px solid"}
-
+          border={"1px solid #eee"}
+          color={'#000'}
         />
         {isEmail && (
           <FormHelperText
@@ -415,7 +418,7 @@ const AddUser = () => {
         )}
       </FormControl>
       <FormControl>
-      <FormLabel>Password</FormLabel>
+      <FormLabel color={'#000'}>Password</FormLabel>
 
         <Input
           type="text"
@@ -426,8 +429,8 @@ const AddUser = () => {
           value={user.password}
           onChange={onChangeHandler}
           autoComplete="off"
-          border={"1px solid"}
-
+          border={"1px solid #eee"}
+          color={'#000'}
         />
         {isPassword && (
           <FormHelperText
@@ -440,7 +443,7 @@ const AddUser = () => {
         )}
       </FormControl>
       <FormControl>
-      <FormLabel>Confirm Password</FormLabel>
+      <FormLabel color={'#000'}>Confirm Password</FormLabel>
 
         <Input
           type="text"
@@ -451,8 +454,8 @@ const AddUser = () => {
           value={user.com_password}
           onChange={onChangeHandler}
           autoComplete="off"
-          border={"1px solid"}
-
+          border={"1px solid #eee"}
+          color={'#000'}
         />
         {isConfirmPassword && (
           <FormHelperText
@@ -463,45 +466,49 @@ const AddUser = () => {
             {isConfirmPassword}
           </FormHelperText>
         )}
+      <FormLabel color={'#000'}> Image</FormLabel>
       </FormControl>
       <div
-        className={`w-[100%]  rounded-lg mt-5  flex flex-col justify-center items-center border border-dotted border-black`}
-      >
-        {selectedImage ? (
-          <div className="relative  py-5">
-            <img
-              className="w-[100%] h-[160px]"
-              src={URL.createObjectURL(selectedImage)}
-              alt="Selected"
-            />
-            <p
-              onClick={() => setSelectedImage(null)}
-              className="cursor-pointer w-[25px] h-[25px] absolute top-2 -right-4 w-25 h-25 bg-[#000] text-white rounded-bl-xl rounded-tr-xl flex justify-center items-center"
-            >
-              <CgClose />
-            </p>
-          </div>
-        ) : (
-          <>
-            <FormControl>
-            <Input
-  height="423%"
-  opacity={0}
-  type="file"
-  className="v"
-  placeholder="photo"
-  name="photo"
-  onChange={onChangeHandlerImg}
-  bg={useColorModeValue("#eee", "white")}
-  autoComplete="off"
-/>
-            </FormControl>
-            <p className="text-2xl font-medium">Upload Imge</p>
-            <em>(Upload only jpg, jpeg, and png images, please)</em>
-            <FiUploadCloud className="mb-8 mt-4 text-2xl" />
-          </>
-        )}
-      </div>
+          className="w-[100%] bg-transparent text-center  rounded-lg 
+        flex flex-col justify-center items-center border-2 border-dotted border-[#eee]"
+        >
+          {selectedImage ? (
+            <div className="relative  py-5">
+              <img
+                className="w-[100%] h-[160px]"
+                src={URL.createObjectURL(selectedImage)}
+                alt="Selected"
+              />
+              <p
+                onClick={() => setSelectedImage(null)}
+                className="cursor-pointer w-[25px] h-[25px] absolute top-2 -right-4 w-25 h-25 bg-[#000] text-white rounded-bl-xl rounded-tr-xl flex justify-center items-center"
+              >
+                <CgClose />
+              </p>
+            </div>
+          ) : (
+            <>
+              <FormControl>
+                <Input
+                  height="423%"
+                  opacity={0}
+                  type="file"
+                  className="v"
+                  placeholder="photo"
+                  name="Image"
+                  onChange={onChangeHandlerImg}
+                  bg={useColorModeValue("transparent", "transparent")}
+                  autoComplete="off"
+                />
+              </FormControl>
+              <p className="text-2xl font-medium text-black">Upload Image</p>
+              <em className=" text-gray-500">
+                (Upload only jpg, jpeg, and png images, please)
+              </em>
+              <FiUploadCloud className="mb-8 mt-4 text-2xl text-black" />
+            </>
+          )}
+        </div>
       <Box className="flex justify-end">
         <Button
         className="flex justify-end items-end"

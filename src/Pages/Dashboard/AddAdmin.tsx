@@ -84,10 +84,11 @@ const AddAdmin = () => {
       <form onSubmit={handleSubmit} className="p-0">
         <Box className="flex gap-3 sm:flex-row flex-col">
           <FormControl mb={4}>
-            <FormLabel>First Name</FormLabel>
+            <FormLabel color={'#000'}>First Name</FormLabel>
             <Input
               placeholder="Course name"
-              border={"1px solid"}
+              border={"1px solid #eee"}
+              color={'#000'}
               name="FName"
               value={adminData.FName}
               onChange={onChangeHandler}
@@ -103,10 +104,12 @@ const AddAdmin = () => {
             )}
           </FormControl>
           <FormControl mb={4}>
-            <FormLabel>Last Name</FormLabel>
+            <FormLabel 
+              color={'#000'}>Last Name</FormLabel>
             <Input
               placeholder="Last name"
-              border={"1px solid"}
+              border={"1px solid #eee"}
+              color={'#000'}
               name="LName"
               value={adminData.LName}
               onChange={onChangeHandler}
@@ -124,10 +127,11 @@ const AddAdmin = () => {
         </Box>
         <Box className="flex gap-3 sm:flex-row flex-col">
           <FormControl mb={4}>
-            <FormLabel>Phone</FormLabel>
+            <FormLabel color={"#000"}>Phone</FormLabel>
             <Input
               placeholder="Phone"
-              border={"1px solid"}
+              border={"1px solid #eee"}
+              color={'#000'}
               name="Phone"
               value={adminData.Phone}
               onChange={onChangeHandler}
@@ -143,10 +147,11 @@ const AddAdmin = () => {
             )}
           </FormControl>
           <FormControl mb={4}>
-            <FormLabel>Age</FormLabel>
+            <FormLabel color={'#000'}>Age</FormLabel>
             <Input
               placeholder="Age"
-              border={"1px solid"}
+              border={"1px solid #eee"}
+              color={'#000'}
               name="Age"
               value={adminData.Age}
               onChange={onChangeHandler}
@@ -163,11 +168,12 @@ const AddAdmin = () => {
           </FormControl>
         </Box>
         <FormControl mb={4}>
-          <FormLabel>Email</FormLabel>
+          <FormLabel color={'#000'}>Email</FormLabel>
           <Input
             placeholder="Email"
             type="email"
-            border={"1px solid"}
+            border={"1px solid #eee"}
+            color={'#000'}
             name="Email"
             value={adminData.Email}
             onChange={onChangeHandler}
@@ -184,11 +190,12 @@ const AddAdmin = () => {
         </FormControl>
         <Box className="flex gap-3 sm:flex-row flex-col">
           <FormControl mb={4}>
-            <FormLabel>Password</FormLabel>
+            <FormLabel color={'#000'}>Password</FormLabel>
             <Input
               placeholder="Password"
               type="password"
-              border={"1px solid"}
+              border={"1px solid #eee"}
+              color={'#000'}
               name="Password"
               value={adminData.Password}
               onChange={onChangeHandler}
@@ -204,11 +211,12 @@ const AddAdmin = () => {
             )}
           </FormControl>
           <FormControl mb={4}>
-            <FormLabel>Confoirm Password</FormLabel>
+            <FormLabel color={'#000'}>Confoirm Password</FormLabel>
             <Input
               placeholder="Confoirm Password"
               type="password"
-              border={"1px solid"}
+              border={"1px solid #eee"}
+              color={'#000'}
               name="com_password"
               value={adminData.com_password}
               onChange={onChangeHandler}
@@ -227,7 +235,7 @@ const AddAdmin = () => {
         <FormLabel>Image</FormLabel>
         <div
           className="w-[100%] bg-transparent text-center  rounded-lg 
-        flex flex-col justify-center items-center border-2 border-dotted border-primary"
+        flex flex-col justify-center items-center border-2 border-dotted border-[#eee]"
         >
           {selectedImage ? (
             <div className="relative  py-5">
@@ -258,11 +266,11 @@ const AddAdmin = () => {
                   autoComplete="off"
                 />
               </FormControl>
-              <p className="text-2xl font-medium">Upload Image</p>
+              <p className="text-2xl font-medium text-black">Upload Image</p>
               <em className=" text-gray-500">
                 (Upload only jpg, jpeg, and png images, please)
               </em>
-              <FiUploadCloud className="mb-8 mt-4 text-2xl" />
+              <FiUploadCloud className="mb-8 mt-4 text-2xl text-black" />
             </>
           )}
         </div>
