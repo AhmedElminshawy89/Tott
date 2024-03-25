@@ -9,7 +9,7 @@ import eye from "../../assets/Images/eye.png";
 import reWrite from "../../assets/Images/reWrite.png";
 import { motion } from "framer-motion";
 import ModelDash from "../../Shared/ModalDash";
-import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
+import React, { ChangeEvent, useCallback, useState } from "react";
 import {
   Input,
   FormHelperText,
@@ -17,7 +17,6 @@ import {
   FormControl,
   useColorModeValue,
   Flex,
-  Spinner,
   Box,
   FormLabel,
 } from "@chakra-ui/react";
