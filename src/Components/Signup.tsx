@@ -62,7 +62,7 @@ const Signup: React.FC = () => {
       setUser((prevUser) => ({ ...prevUser, photo: file }));
     }
   };
-  
+
   const handleSelectChange = (
     selectedOption: { label: string; value: string },
     type: string
@@ -104,7 +104,7 @@ const Signup: React.FC = () => {
         }
       } else if (
         name === "com_password" &&
-        value.trim() !== user.password.trim()
+        value.trim() !== user.password?.trim()
       ) {
         setIsConfirmPassword("Passwords do not match");
       } else if (name === "fname") {
@@ -157,7 +157,7 @@ const Signup: React.FC = () => {
         }
       } else if (
         name === "com_password" &&
-        value.trim() !== user.password.trim()
+        value.trim() !== user.password?.trim()
       ) {
         setIsConfirmPassword("Passwords do not match");
       } else if (name === "fname") {
@@ -195,10 +195,10 @@ const Signup: React.FC = () => {
       if (!user.age.trim()) {
         setIsAge("Age is required");
       }
-      if (!user.com_password.trim()) {
+      if (!user.com_password?.trim()) {
         setIsConfirmPassword("Confirm Password is required");
       }
-      if (!user.password.trim()) {
+      if (!user.password?.trim()) {
         setIsPassword("Password is required");
       }
       if (!user.gender.trim()) {
@@ -210,7 +210,6 @@ const Signup: React.FC = () => {
       }
 
       dispatch(userRegister(user));
-      console.log(user);
     },
     [dispatch, user]
   );
@@ -366,9 +365,9 @@ const Signup: React.FC = () => {
             options={
               cities[user.country]
                 ? cities[user.country].map((city) => ({
-                    label: city,
-                    value: city,
-                  }))
+                  label: city,
+                  value: city,
+                }))
                 : []
             }
             placeholder="Select City"
@@ -492,17 +491,17 @@ const Signup: React.FC = () => {
         ) : (
           <>
             <FormControl>
-            <Input
-  height="423%"
-  opacity={0}
-  type="file"
-  className="v"
-  placeholder="photo"
-  name="photo"
-  onChange={onChangeHandlerImg}
-  bg={useColorModeValue("#eee", "white")}
-  autoComplete="off"
-/>
+              <Input
+                height="423%"
+                opacity={0}
+                type="file"
+                className="v"
+                placeholder="photo"
+                name="photo"
+                onChange={onChangeHandlerImg}
+                bg={useColorModeValue("#eee", "white")}
+                autoComplete="off"
+              />
             </FormControl>
             <p className="text-2xl font-medium">Upload Imge</p>
             <em>(Upload only jpg, jpeg, and png images, please)</em>
@@ -516,12 +515,12 @@ const Signup: React.FC = () => {
           mt={"25px"}
           bg={
             isEmail ||
-            isPassword ||
-            isConfirmPassword ||
-            isGender ||
-            isFName ||
-            isAge ||
-            isPhone
+              isPassword ||
+              isConfirmPassword ||
+              isGender ||
+              isFName ||
+              isAge ||
+              isPhone
               ? "red.500"
               : useColorModeValue("orange.500", "orange.400")
           }
@@ -530,12 +529,12 @@ const Signup: React.FC = () => {
           _hover={{
             bg:
               isEmail ||
-              isPassword ||
-              isConfirmPassword ||
-              isGender ||
-              isFName ||
-              isAge ||
-              isPhone
+                isPassword ||
+                isConfirmPassword ||
+                isGender ||
+                isFName ||
+                isAge ||
+                isPhone
                 ? "red.400"
                 : useColorModeValue("orange.400", "orange.500"),
           }}

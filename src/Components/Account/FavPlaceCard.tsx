@@ -6,14 +6,16 @@ import {
   Text,
   Button,
   Box,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import place from "../../assets/Images/plac.png";
 import { DeleteIcon } from "@chakra-ui/icons";
 
 const FavPlaceCard = () => {
   return (
-    <Card maxW="300px" backgroundColor={"#2D2D2D"} p={2} marginTop={4}
-    color={'#fff'}>
+    <Card maxW="300px" backgroundColor={useColorModeValue('#eee', '#2D2D2D')}
+      p={2} marginTop={4}
+      color={'#fff'}>
       <Image
         height={{ base: "190px", sm: "210px", md: "195px" }}
         w="100%"
@@ -25,8 +27,7 @@ const FavPlaceCard = () => {
           <Text
             size="md"
             fontSize={"26px"}
-            className="text-main-400"
-            textAlign={"center"}
+            color={useColorModeValue('black', 'white')} textAlign={"center"}
             marginTop={"-15px"}
           >
             Kato Dool
@@ -37,8 +38,7 @@ const FavPlaceCard = () => {
               variant={"outline"}
               border={"1px solid #CA933F"}
               className="xl:flex-1"
-              color={'#fff'}
-              _hover={{bg:'transparent'}}
+              color={useColorModeValue('black', 'white')} _hover={{ bg: 'transparent' }}
             >
               See Details
             </Button>
@@ -47,8 +47,7 @@ const FavPlaceCard = () => {
               variant={"outline"}
               border={"1px solid red"}
               className="xl:flex-1"
-              color={'#fff'}
-              _hover={{bg:'transparent'}}
+              color={useColorModeValue('black', 'white')} _hover={{ bg: 'transparent' }}
             >
               <DeleteIcon className="mr-2 text-sm text-red-500" /> Remove
             </Button>

@@ -6,6 +6,7 @@ import {
   Heading,
   Text,
   Button,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import img from "../../assets/Images/madeforyou1.png";
 import { useState } from "react";
@@ -23,7 +24,7 @@ const BoxRecommended = () => {
       maxW="sm"
       borderRadius="30px"
       my={"15px"}
-      backgroundColor="#2D2D2D"
+      backgroundColor={useColorModeValue('#eee','#2D2D2D')}
       border="1px solid #CA933F"
     >
       <CardBody>
@@ -59,13 +60,13 @@ const BoxRecommended = () => {
           </svg>
         </Button>
         <Stack mt="3" spacing="2">
-          <Heading color="white" size="md">
+          <Heading color={useColorModeValue('black','white')} size="md">
             Living room Sofa
           </Heading>
-          <Text color="white">
+          <Text color={useColorModeValue('black','white')}>
             This sofa is perfect for modern tropical spaces
           </Text>
-          <Text color="white" fontSize="2xl">
+          <Text color={useColorModeValue('black','white')} fontSize="2xl">
             $450
           </Text>
         </Stack>

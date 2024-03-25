@@ -20,6 +20,7 @@ import AddPlaces from "../Pages/Dashboard/AddPlaces";
 import Review from "../Pages/Dashboard/Review";
 import Setting from "../Pages/Dashboard/Setting";
 import ProfilePage from "../Pages/Dashboard/Profile";
+import RegestrationAdmin from "../Pages/Dashboard/RegestrationAdmin";
 
 const Routing = () => {
   return (
@@ -52,6 +53,7 @@ const Routing = () => {
           <Route path="setting" element={<Setting />} />
           <Route path="profile" element={<ProfilePage />} />
         </Route>
+        <Route path="/loginAdmin" element={<RegestrationAdmin />} />
         <Route path="/login" element={<Registration />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

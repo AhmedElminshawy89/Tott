@@ -13,32 +13,20 @@ export const userRegister = createAsyncThunk<
   UserData,
   UserData,
   { rejectValue: boolean }
->("register/userRegister", async (user, thunkAPI) => {
+>("register/AdminRegister", async (user, thunkAPI) => {
   try {
-    const formData = new FormData();
-    formData.append("fname", user.fname || "");
-    formData.append("lname", user.lname || "");
-    formData.append("email", user.email || "");
-    formData.append("password", user.password || "");
-    formData.append("com_password", user.com_password || "");
-    formData.append("phone", user.phone || "");
-    formData.append("age", user.age || "");
-    formData.append("gender", user.gender || "");
-    formData.append("city", user.city || "");
-    formData.append("country", user.country || "");
-    formData.append("photo", user.photo||"");
     const { data } = await axios.post<UserData>(
-      "http://localhost:8001/api/registerUser",
-      formData
+      "http://localhost:8001/api/admin/register",
+      user
     );
     return data;
   } catch (error) {
     return thunkAPI.rejectWithValue(true);
   }
 });
-const registerSlice = createSlice({
+const registerAdminSlice = createSlice({
   initialState,
-  name: "register",
+  name: "registerAdmin",
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(userRegister.pending, (state) => {
@@ -79,6 +67,6 @@ const registerSlice = createSlice({
   },
 });
 
-export const selectRegister = (state: { register: LoginState }) =>
+export const selectRegisterAdmin = (state: { register: LoginState }) =>
   state.register;
-export default registerSlice.reducer;
+export default registerAdminSlice.reducer;

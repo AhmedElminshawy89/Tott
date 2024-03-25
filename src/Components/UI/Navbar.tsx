@@ -32,8 +32,8 @@ interface Props {
   children: React.ReactNode;
   to: string
 }
-const Links = [{ name: "Acount", to: "/account/MyPersonalInfo" },
-{ name: "Dashboard", to: "/dashboard/home" }];
+const Links = [
+  { name: "Dashboard", to: "/LoginAdmin" }];
 const NavLinks = (props: Props) => {
   const { onClose } = useDisclosure();
   const handleCloseNav = () => {
@@ -43,6 +43,7 @@ const NavLinks = (props: Props) => {
 
   return (
     <Box
+      key={to}
       as={NavLink}
       to={to}
       px={2}
@@ -61,7 +62,6 @@ const NavLinks = (props: Props) => {
 
 export default function Navbar() {
   const jwt = CookiesServices.get("jwt");
-
   const GetData = localStorage.getItem("username");
   const userData = GetData ? JSON.parse(GetData) : null;
   const { colorMode, toggleColorMode } = useColorMode();
@@ -174,12 +174,11 @@ export default function Navbar() {
                 >
                   <Avatar
                     size={"sm"}
-                  // src={"http://localhost:1337/uploads/me_8dee4a849c.jpg"}
-                  // src={"http://localhost:1337/uploads/me_8dee4a849c.jpg"}
+                    src={userData?.photo}
                   />
                 </MenuButton>
                 <MenuList>
-                  <MenuItem>Welcome , {userData?.username}</MenuItem>
+                  <MenuItem>Welcome , {userData?.fname}</MenuItem>
                   {userData && (
                     <MenuItem as={NavLink} to="/account/MyPersonalInfo">
                       Account

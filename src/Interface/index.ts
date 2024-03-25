@@ -9,8 +9,8 @@ export interface UserSignUp {
   fname: string;
   lname: string;
   email: string;
-  password: string;
-  com_password: string;
+  password?: string;
+  com_password?: string;
   phone: string;
   age: string;
   gender: string;
@@ -18,6 +18,51 @@ export interface UserSignUp {
   country: string;
   photo: File | null;
 }
+export interface IUserData {
+  id: string | undefined;
+  fname: string;
+  lname: string;
+  email: string;
+  phone: string;
+  age: string | number;
+  gender: string;
+  city: string;
+  country: string;
+  photo: File | null | string | undefined;
+  // password: unknown;
+}
+
+export interface IUserDataMap {
+  data: {
+    name: string;
+    desc: string;
+    city_id: string;
+    category_name: string;
+    longitude: string;
+    latitude: string;
+    id: string | number;
+    fname: string;
+    lname: string;
+    email: string;
+    phone: string;
+    age: string | number;
+    gender: string;
+    city: string;
+    country: string;
+    photo: File | null | string | undefined;
+  };
+  id: string | number;
+  fname: string;
+  lname: string;
+  email: string;
+  phone: string;
+  age: string | number;
+  gender: string;
+  city: string;
+  country: string;
+  photo: File | null | string | undefined;
+}
+
 export interface NetworkState {
   isOnline: boolean;
 }
@@ -60,10 +105,37 @@ export interface UserData {
     username?: string;
     api_token?: string;
   };
-  username?: string;
-  identifier?: string;
+  fname?: string;
+  lname?: string;
+  email?: string;
   password?: string;
+  com_password?: string;
+  phone?: string;
+  age?: string;
+  gender?: string;
+  city?: string;
+  country?: string;
+  photo?: File | null;
 }
+export interface AdminDataLogin {
+  id?: number;
+  admin?: {
+    username?: string;
+    api_token?: string;
+  };
+  fname?: string;
+  lname?: string;
+  email?: string;
+  password?: string;
+  com_password?: string;
+  phone?: string;
+  age?: string;
+  gender?: string;
+  city?: string;
+  country?: string;
+  photo?: File | null;
+}
+
 export interface LoginState {
   loading: boolean;
   data: UserData | null;
@@ -75,26 +147,95 @@ export interface CountryOption {
   value: string;
 }
 export interface ICategoryData {
-  categoryName: string;
+  id?: string | number;
+  name: string;
 }
 export interface ICityData {
-  cityName: string;
-  description: string;
-  Image: File | null;
+  id?: string | undefined | number;
+  city_id: string;
+  desc: string;
+  photo?: File | null | string | undefined;
+}
+export interface ICityDataUpdate {
+  id: string | number;
+  city_id: string;
+  desc: string;
+  photo: File | null | string | undefined;
+  selectedImage?: File | null | string | undefined;
 }
 export interface IPlaceData extends ICityData {
-  placeName: string;
-  categoryName: string;
-  location: string;
-  initRate: string;
+  id?: string | number;
+  name: string;
+  desc: string;
+  city_id: string;
+  photo: File | null | string | undefined;
+  category_name: string;
+  longitude: string;
+  latitude: string;
+}
+export interface IPlaceDataMap {
+  dataPlace: {
+    id?: string | number;
+    name?: string | undefined;
+    desc: string;
+    city_id: string;
+    photo: File | null;
+    category_name: string;
+    longitude: string;
+    latitude: string;
+  };
+  id?: string | number;
+  name: string | undefined;
+  desc: string;
+  city_id: string;
+  photo?: File | null;
+  category_name: string;
+  longitude: string;
+  latitude: string;
 }
 export interface IAdminData {
-  FName: string,
-  LName: string,
-  Phone: string,
-  Age: string,
-  Email: string,
-  Password: string,
-  com_password: string,
-  Image: File|null,
+  id?: string;
+  fname: string;
+  lname: string;
+  phone: string;
+  gender: string;
+  email: string;
+  password?: string | undefined;
+  com_password?: string | undefined;
+  photo: File | null | string | undefined;
+}
+export interface IAdminDataMap {
+  age: unknown;
+  country: string;
+  id?: string;
+  fname: string;
+  lname: string;
+  phone: string;
+  gender: string;
+  email: string;
+  password: string;
+  com_password: string;
+  photo: string | undefined;
+}
+export interface ICategoryDataMap {
+  data: {
+    id?: string | number;
+    name: string;
+  };
+  id?: string;
+  name: string;
+}
+
+export interface ICityDataMap {
+  data: {
+    com_password?: string;
+    id?: string | number;
+    name: string;
+    desc: string;
+    photo: string | undefined | File;
+  };
+  id?: string | number;
+  name: string;
+  desc: string;
+  photo: string | undefined;
 }

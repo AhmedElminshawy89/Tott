@@ -105,7 +105,7 @@ const AddUser = () => {
           }
         } else if (
           name === "com_password" &&
-          value.trim() !== user.password.trim()
+          value.trim() !== user.password?.trim()
         ) {
           setIsConfirmPassword("Passwords do not match");
         } else if (name === "fname") {
@@ -158,7 +158,7 @@ const AddUser = () => {
           }
         } else if (
           name === "com_password" &&
-          value.trim() !== user.password.trim()
+          value.trim() !== user.password?.trim()
         ) {
           setIsConfirmPassword("Passwords do not match");
         } else if (name === "fname") {
@@ -196,10 +196,10 @@ const AddUser = () => {
         if (!user.age.trim()) {
           setIsAge("Age is required");
         }
-        if (!user.com_password.trim()) {
+        if (!user.com_password?.trim()) {
           setIsConfirmPassword("Confirm Password is required");
         }
-        if (!user.password.trim()) {
+        if (!user.password?.trim()) {
           setIsPassword("Password is required");
         }
         if (!user.gender.trim()) {

@@ -58,8 +58,8 @@ const LinkItems: Array<LinkItemProps> = [
 ];
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
-  // const GetData = localStorage.getItem("username");
-  // const userData = GetData ? JSON.parse(GetData) : null;
+  const GetData = localStorage.getItem("username");
+  const userData = GetData ? JSON.parse(GetData) : null;
   const location = useLocation();
   const handleLinkClick = () => {
     onClose();
@@ -87,15 +87,15 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
           flexDirection={"column"}
         >
           <Image
-            src="http://localhost:1337/uploads/me_8dee4a849c.jpg"
+            src={userData.photo}
             w={40}
             h={40}
             borderRadius={"full"}
             objectFit={"contain"}
           />
           <Text fontSize="md" color={"#424242"}>
-          {/* {userData.username} */}
-          Ahmed Elminshawy
+              {userData.fname}{" "}
+              {userData.lname}
           </Text>
         </Flex>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />

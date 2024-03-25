@@ -20,12 +20,11 @@ import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "@reduxjs/toolkit";
 import { selectRegisterAdmin, userRegister } from "../../app/feature/RegisterAdmin";
 import { RootState } from "../../app/Store";
-const AddAdmin = () => {
+const SignUpAdmin = () => {
   type MyDispatch = ThunkDispatch<RootState, undefined, AnyAction>;
   const dispatch = useDispatch<MyDispatch>();
   const { loading:isLoading } = useSelector(selectRegisterAdmin);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-
   const [adminData, setAdminData] = useState<IAdminData>({
     fname: "",
     lname: "",
@@ -156,14 +155,14 @@ const AddAdmin = () => {
   };
 
   return (
-    <Box className="flex flex-col text-2xl  rounded-xl ">
-      <form onSubmit={handleSubmit} className="p-0">
+      <form className="sign-up-form"  onSubmit={handleSubmit}>
         <Box className="flex gap-3 sm:flex-row flex-col">
           <FormControl mb={4}>
-            <FormLabel color={'#000'}>First Name</FormLabel>
+            <FormLabel >First Name</FormLabel>
             <Input
               placeholder="Course name"
               border={"1px solid #eee"}
+              bg={'#eee'}
               color={'#000'}
               name="fname"
               value={adminData.fname}
@@ -180,12 +179,12 @@ const AddAdmin = () => {
             )}
           </FormControl>
           <FormControl mb={4}>
-            <FormLabel
-              color={'#000'}>Last Name</FormLabel>
+            <FormLabel>Last Name</FormLabel>
             <Input
               placeholder="Last name"
               border={"1px solid #eee"}
               color={'#000'}
+              bg={'#eee'}
               name="lname"
               value={adminData.lname}
               onChange={onChangeHandler}
@@ -203,11 +202,12 @@ const AddAdmin = () => {
         </Box>
         <Box className="flex gap-3 sm:flex-row flex-col">
           <FormControl mb={4}>
-            <FormLabel color={"#000"}>Phone</FormLabel>
+            <FormLabel >Phone</FormLabel>
             <Input
               placeholder="Phone"
               border={"1px solid #eee"}
               color={'#000'}
+              bg={'#eee'}
               name="phone"
               value={adminData.phone}
               onChange={onChangeHandler}
@@ -254,12 +254,13 @@ const AddAdmin = () => {
           </FormControl>
         </Box>
         <FormControl mb={4}>
-          <FormLabel color={'#000'}>Email</FormLabel>
+          <FormLabel>Email</FormLabel>
           <Input
             placeholder="Email"
             type="email"
             border={"1px solid #eee"}
             color={'#000'}
+            bg={'#eee'}
             name="email"
             value={adminData.email}
             onChange={onChangeHandler}
@@ -276,12 +277,13 @@ const AddAdmin = () => {
         </FormControl>
         <Box className="flex gap-3 sm:flex-row flex-col">
           <FormControl mb={4}>
-            <FormLabel color={'#000'}>Password</FormLabel>
+            <FormLabel>Password</FormLabel>
             <Input
               placeholder="Password"
               type="password"
               border={"1px solid #eee"}
               color={'#000'}
+              bg={'#eee'}
               name="password"
               value={adminData.password}
               onChange={onChangeHandler}
@@ -297,12 +299,13 @@ const AddAdmin = () => {
             )}
           </FormControl>
           <FormControl mb={4}>
-            <FormLabel color={'#000'}>Confoirm Password</FormLabel>
+            <FormLabel>Confoirm Password</FormLabel>
             <Input
               placeholder="Confoirm Password"
               type="password"
               border={"1px solid #eee"}
               color={'#000'}
+              bg={'#eee'}
               name="com_password"
               value={adminData.com_password}
               onChange={onChangeHandler}
@@ -320,7 +323,7 @@ const AddAdmin = () => {
         </Box>
         <FormLabel>Image</FormLabel>
         <div
-          className="w-[100%] bg-transparent text-center  rounded-lg 
+          className="w-[100%] bg-[#eee] text-center  rounded-lg 
         flex flex-col justify-center items-center border-2 border-dotted border-[#eee]"
         >
           {selectedImage ? (
@@ -371,10 +374,10 @@ const AddAdmin = () => {
             </FormHelperText>
           )}
         </FormControl>
-        <Box className="flex justify-end mt-4">
+        <Box className="flex justify-center mt-4">
           <button
             type="submit"
-            className="text-white  bg-black px-4  py-2 rounded-lg duration-300  text-xl"
+            className="text-white  bg-main-400 px-4  py-2 rounded-lg duration-300  text-xl"
           >
             {isLoading ? (
               <>
@@ -387,8 +390,7 @@ const AddAdmin = () => {
           </button>
         </Box>
       </form>
-    </Box>
   );
 };
 
-export default AddAdmin;
+export default SignUpAdmin;

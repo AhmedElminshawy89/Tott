@@ -52,14 +52,13 @@ function Favourites() {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`${
-              activeTab === tab.id
+            className={`${activeTab === tab.id
                 ? `${useColorModeValue("text-black", "text-white")}`
                 : `${useColorModeValue(
-                    "hover:text-black/60",
-                    "hover:text-white/60"
-                  )}`
-            } relative  outline-none px-3 py-1.5 sm:text-2xl font-normal transition-all z-40`}
+                  "hover:text-black/60",
+                  "hover:text-white/60"
+                )}`
+              } relative  outline-none px-3 py-1.5 sm:text-2xl font-normal transition-all z-40`}
             style={{
               WebkitTapHighlightColor: "transparent",
             }}

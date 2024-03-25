@@ -9,6 +9,7 @@ import {
   ModalOverlay,
   useColorModeValue,
   useDisclosure,
+  Image
 } from "@chakra-ui/react";
 import React, { ReactNode } from "react";
 
@@ -16,8 +17,9 @@ interface IModelDash {
   size?: string;
   title: string;
   children: ReactNode;
-  ButtonName: string;
-  // onClick?: (e: React.FormEvent<HTMLFormElement>) => void;
+  ButtonName?: string;
+  image?: string; // Image URL
+  onClose?:()=>void
 }
 
 const ModelDash = ({
@@ -25,49 +27,45 @@ const ModelDash = ({
   title,
   children,
   ButtonName,
-  // onClick,
+  image,
+  onClose, 
 }: IModelDash) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose: closeModal } = useDisclosure();
 
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
 
   return (
     <>
-      <Button
+      {ButtonName && <Button
         onClick={onOpen}
         bg={"#000"}
         color={"white"}
         _hover={{ bg: "#272626" }}
       >
         {ButtonName}
-      </Button>
+      </Button>}
+      {image && <Image src={image} alt="Button Image" onClick={onOpen} w={35} h={35} cursor={'pointer'}
+        className=" absolute right-[52px] top-[120px]" />}
       <Modal
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
         size={size}
         isOpen={isOpen}
-        onClose={onClose}
+        onClose={() => {
+          closeModal(); 
+          onClose?.(); 
+        }}
         isCentered
       >
         <ModalOverlay />
         <ModalContent bg={useColorModeValue("white", "white")}>
           <ModalHeader color={"#000"}>{title}</ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton onClick={closeModal}/> 
           <ModalBody pb={6} color={"#000"}>
             {children}
           </ModalBody>
           <ModalFooter>
-            {/* <Button
-              _hover={{ bg: "#272626" }}
-              mr={3}
-              color={"white"}
-              bg={"#000"}
-              onClick={onClick} 
-            >
-              Save
-            </Button> */}
-            {/* <Button onClick={onClose}>Cancel</Button> */}
           </ModalFooter>
         </ModalContent>
       </Modal>
@@ -76,3 +74,4 @@ const ModelDash = ({
 };
 
 export default ModelDash;
+

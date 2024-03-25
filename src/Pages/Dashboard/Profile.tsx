@@ -1,21 +1,19 @@
-import { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useState } from "react";
 import { Avatar, Box, Divider, Flex, Grid, Heading, Image, Text, Input } from "@chakra-ui/react";
 import cover from '../../assets/Images/cover.jpg';
-import me from '../../assets/Images/me.jpg';
 import Admins from "./Admins";
+import { useFetchAdminQuery } from "../../app/feature/AdminSlice";
 
 const ProfilePage = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const friends = [
-    { name: "Ahmed", isAdmin: true },
-    { name: "Mohamed", isAdmin: false },
-    { name: "Elsaied", isAdmin: true },
-    { name: "Ibrahim", isAdmin: true },
-    { name: "Elsayed", isAdmin: true },
-  ];
+  const { data } = useFetchAdminQuery("")
+  const GetData = localStorage.getItem("AdminData");
+  const adminData = GetData ? JSON.parse(GetData) : { fname: "Guest", lname: "", photo: "" };
 
-  const filteredFriends = friends.filter(friend =>
-    friend.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredData = data?.Admins?.data.filter((item: { fname: string; }) =>
+    item.fname.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -24,14 +22,13 @@ const ProfilePage = () => {
         <Box>
           <Image src={cover} alt="Cover Photo" className="w-full h-auto rounded-lg mb-4 md:mb-0" />
           <Flex justify="center" mb={4}>
-            <Avatar size="xl" name="Ahmed Elminshawy" src={me} mt={-12} />
+            <Avatar size="xl" name="Ahmed Elminshawy" src={adminData.photo} mt={-12} />
           </Flex>
-          <Heading size="lg" textAlign="center">Ahmed Elminshawy</Heading>
+          <Heading size="lg" textAlign="center">{adminData.fname}{" "}{adminData.lname}</Heading>
           <Text fontSize="md" color="gray.500" textAlign="center">Super Admin</Text>
           <Divider mt={4} mb={6} />
         </Box>
-
-        <Box>
+        <Box >
           <Input
             placeholder="Search Friends"
             value={searchTerm}
@@ -42,15 +39,17 @@ const ProfilePage = () => {
             <Heading size="md">Admin List</Heading>
           </Flex>
           <Divider mt={2} mb={4} />
-          {filteredFriends.map((friend, index) => (
+          <Box height={'245px'} overflow={'scroll'}>
+          {filteredData && filteredData.map((friend: { photo: string | undefined; fname: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; lname: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; }, index: Key | null | undefined) => (
             <Flex key={index} align="center" mb={2}>
-              <Avatar size="sm" name={friend.name} />
+              <Avatar size="sm" src={friend.photo} />
               <Box ml={3}>
-                <Text fontWeight="bold">{friend.name}</Text>
-                <Text fontSize="sm" color="gray.500">{friend.isAdmin ? "Admin" : "Regular"}</Text>
+                <Text fontWeight="bold">{friend.fname}</Text>
+                <Text fontWeight="bold">{friend.lname}</Text>
               </Box>
             </Flex>
           ))}
+          </Box>
         </Box>
       </Grid>
       <Admins />

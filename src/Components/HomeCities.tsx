@@ -1,4 +1,4 @@
-import { Box, Image, Text } from "@chakra-ui/react";
+import { Box, Image, Text, useColorModeValue } from "@chakra-ui/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -14,7 +14,7 @@ const HomeCities = () => {
   return (
     <Box
       px={["1", "3", "5"]}
-      bg={"#2D2D2D"}
+      backgroundColor={useColorModeValue('#eee','#2D2D2D')}
       width={{ base: "90%", sm: "98%" }}
       m={["60px auto", null, "80px auto"]}
       borderRadius={"20px"}

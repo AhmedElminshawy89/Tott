@@ -1,15 +1,17 @@
 import { Outlet } from "react-router-dom";
-import { lazy } from "react";
 import Footer from "../Components/UI/Footer";
-const Navbar = lazy(() => import("../Components/UI/Navbar"));
+import Navbar from "../Components/UI/Navbar";
+import React from "react";
+
 const Applayout = () => {
   return (
-    <>
+    <React.Fragment>
       <Navbar />
       <Outlet />
-      <Footer/>
-    </>
+      <Footer />
+    </React.Fragment>
   );
 };
 
 export default Applayout;
+

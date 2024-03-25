@@ -13,15 +13,22 @@ import {
   Tr,
   Text,
   Avatar,
-  Button,
 } from "@chakra-ui/react";
-import img from "../../assets/Images/Cities.png";
 import { FaCity, FaPlaceOfWorship } from "react-icons/fa";
 
 import { MdCategory, MdOutlineRateReview } from "react-icons/md";
-import { BiEdit } from "react-icons/bi";
-import { MdOutlineDelete } from "react-icons/md";
+import { useFetchPlaceQuery } from "../../app/feature/PlaceSlice";
+import { useFetchCityQuery } from "../../app/feature/CitySlice";
+import { useFetchCategoryQuery } from "../../app/feature/CategorySlice";
+import { useFetchReviewQuery } from "../../app/feature/ReviewSlice";
+import DashboardHomeSkeleton from "./DashboardHomeSkeleton";
 const Dashboard = () => {
+  const { data,isLoading,error } = useFetchPlaceQuery("");
+  const { data:dataCity } = useFetchCityQuery("");
+  const { data:dataCategory } = useFetchCategoryQuery("");
+  const { data:datareview } = useFetchReviewQuery("");
+  if(error) return <h1>Error</h1>
+  if(isLoading) return <DashboardHomeSkeleton/>
   return (
     <Box>
       <Box className="flex items-center justify-between flex-wrap gap-8">
@@ -31,7 +38,7 @@ const Dashboard = () => {
               <Text className=" text-[#67748e] text-2xl font-semibold">
                 Categoris
               </Text>
-              <Text className="text-[#344767] text-lg font-medium">4</Text>
+              <Text className="text-[#344767] text-lg font-medium">{dataCategory?.Categories?.data?.length}</Text>
             </Box>
             <Box className="bg-gradient-to-br from-[#ca933f] to-[#cfb285] shadow-lg p-2 rounded-lg">
               <MdCategory className="text-4xl text-white" />
@@ -44,7 +51,7 @@ const Dashboard = () => {
               <Text className=" text-[#67748e] text-2xl font-semibold">
                 Cities
               </Text>
-              <Text className="text-[#344767] text-lg font-medium">300</Text>
+              <Text className="text-[#344767] text-lg font-medium">{dataCity?.Cities?.data?.length}</Text>
             </Box>
             <Box className="bg-gradient-to-br from-[#ca933f] to-[#cfb285] shadow-lg p-2 rounded-lg">
               <FaCity className="text-4xl text-white" />
@@ -57,7 +64,7 @@ const Dashboard = () => {
               <Text className=" text-[#67748e] text-2xl font-semibold">
                 Places
               </Text>
-              <Text className="text-[#344767] text-lg font-medium">4</Text>
+              <Text className="text-[#344767] text-lg font-medium">{data?.Places?.data?.length}</Text>
             </Box>
             <Box className="bg-gradient-to-br from-[#ca933f] to-[#cfb285] shadow-lg p-2 rounded-lg">
               <FaPlaceOfWorship className="text-4xl text-white" />
@@ -70,7 +77,7 @@ const Dashboard = () => {
               <Text className=" text-[#67748e] text-2xl font-semibold">
                 Review
               </Text>
-              <Text className="text-[#344767] text-lg font-medium">105</Text>
+              <Text className="text-[#344767] text-lg font-medium">{datareview?.Rating?.data?.length}</Text>
             </Box>
             <Box className="bg-gradient-to-br from-[#ca933f] to-[#cfb285] shadow-lg p-2 rounded-lg">
               <MdOutlineRateReview className="text-4xl text-white" />
@@ -79,74 +86,66 @@ const Dashboard = () => {
         </Box>
       </Box>
       <TableContainer
-  bg={"white"}
-  borderRadius={"10px"}
-  p={2}
-  color={"#000"}
-  fontSize={"18px"}
-  my={12}
->
-  <Table variant="solid" border={'1px solid #eee'}>
-    <TableCaption>Categories</TableCaption>
-    <Thead bg="gray.100">
-      <Tr>
-        <Th>ID</Th>
-        <Th>Place Name</Th>
-        <Th>Category Name</Th>
-        <Th>City Name</Th>
-        <Th>Location</Th>
-        <Th>Rate</Th>
-        <Th>Description</Th>
-        <Th>Image</Th>
-        <Th>Actions</Th>
-      </Tr>
-    </Thead>
-    <Tbody>
-      <Tr border={'1px solid #eee'}>
-        <Td>1</Td>
-        <Td>Svsj</Td>
-        <Td>Hotel</Td>
-        <Td>Alexandria</Td>
-        <Td>cairo,alx</Td>
-        <Td>3</Td>
-        <Td>Lorem ipsum dolor sit amet ...</Td>
-        <Td>
-          <Avatar src={img} />
-        </Td>
-        <Td>
-          <Box className="flex gap-2">
-            <Button>
-              {" "}
-              <BiEdit className=" cursor-pointer text-2xl text-black" />
-            </Button>
-            <Button
-              variant={"solid"}
-              bg={"red"}
-              _hover={{ bg: "red" }}
-            >
-              {" "}
-              <MdOutlineDelete className=" cursor-pointer text-2xl text-white" />
-            </Button>
-          </Box>
-        </Td>
-      </Tr>
-    </Tbody>
-    <Tfoot bg="gray.100">
-      <Tr>
-        <Th>ID</Th>
-        <Th>Place Name</Th>
-        <Th>Category Name</Th>
-        <Th>City Name</Th>
-        <Th>Location</Th>
-        <Th>Rate</Th>
-        <Th>Description</Th>
-        <Th>Image</Th>
-        <Th>Actions</Th>
-      </Tr>
-    </Tfoot>
-  </Table>
-</TableContainer>
-
+        bg={"white"}
+        borderRadius={"10px"}
+        p={2}
+        color={"#000"}
+        fontSize={"18px"}
+        my={12}
+      >
+        <Table variant="solid" border={'1px solid #eee'}>
+          <TableCaption>Places</TableCaption>
+          <Thead bg={'gray.100'}>
+            <Tr>
+              <Th>ID</Th>
+              <Th>Place Name</Th>
+              <Th>Describtion</Th>
+              <Th>Image</Th>
+              <Th>City Id</Th>
+              <Th>Category Name</Th>
+              <Th>Longitude</Th>
+              <Th>Latitude</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+          {data && data.Places && data.Places.data && data.Places.data.length > 0 ? (
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            data.Places.data.map((userData: any, i: number) => (
+              <Tr key={i} border={"1px solid #eee"}>
+                <Td>{userData?.id}</Td>
+                <Td>{userData?.name}</Td>
+                <Td>{userData?.desc}</Td>
+                <Td>
+                  <Avatar src={userData?.photo} />
+                </Td>
+                <Td>{userData?.city_id}</Td>
+                <Td>{userData?.category_name}</Td>
+                <Td>{userData?.longitude}</Td>
+                <Td>{userData?.latitude}</Td>
+              </Tr>
+            ))
+          ) : (
+            <Tr>
+              <Td colSpan={8} textAlign={"center"}>
+                No data found
+              </Td>
+            </Tr>
+          )}
+          </Tbody>
+          <Tfoot bg={'gray.100'}>
+            <Tr>
+              <Th>ID</Th>
+              <Th>Place Name</Th>
+              <Th>Describtion</Th>
+              <Th>Image</Th>
+              <Th>City Id</Th>
+              <Th>Category Name</Th>
+              <Th>Longitude</Th>
+              <Th>Latitude</Th>
+            </Tr>
+          </Tfoot>
+        </Table>
+      </TableContainer>
     </Box>
   );
 };

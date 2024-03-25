@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import img from "../../assets/Images/logo.png";
-import me from "../../assets/Images/me.jpg";
 import {
   IconButton,
   Avatar,
@@ -37,6 +36,8 @@ import { BiCategory, BiSolidCity } from "react-icons/bi";
 import { SiHomebridge } from "react-icons/si";
 import { FaPlaceOfWorship } from "react-icons/fa";
 import { MdDomainAdd, MdReviews } from "react-icons/md";
+import CookiesServices from "../../Services/CookiesServices";
+import { Navigate } from "react-router-dom";
 interface LinkItemProps {
   name: string;
   icon: IconType;
@@ -67,8 +68,9 @@ const LinkItems: Array<LinkItemProps> = [
   { name: "Setting", to: "setting", icon: FiSettings },
   { name: "Log Out", to: "/", icon: FiLogOut },
 ];
-
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+  const isAuthentication = CookiesServices.get("jwtAdmin");
+  if (!isAuthentication) return <Navigate to="/LoginAdmin" replace />;
   const location = useLocation();
   const handleLinkClick = () => {
     onClose();
@@ -172,6 +174,18 @@ const NavItem = ({ to, icon, children, ...rest }: NavItemProps) => {
 };
 
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
+  const GetData = localStorage.getItem("AdminData");
+  const adminData = GetData ? JSON.parse(GetData) : { fname: "Guest", photo: "" };  
+  function removeCookie(name: string) {
+    if (document.cookie.indexOf(`${name}=`) !== -1) {
+      document.cookie = `${name}=; path=/Tott/`;
+    }
+  }
+  const handleLogOut = () => {
+    removeCookie("jwtAdmin");
+    localStorage.removeItem("AdminData");
+    window.location.reload();
+  };
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -182,8 +196,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       borderBottomWidth="1px"
       borderBottomColor={useColorModeValue("#ca933f", "#ca933f")}
       justifyContent={{ base: "space-between", md: "flex-end" }}
-      {...rest}
-    >
+      {...rest}>
       <IconButton
         display={{ base: "flex", md: "none" }}
         onClick={onOpen}
@@ -191,20 +204,15 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         aria-label="open menu"
         icon={<FiMenu />}
       />
-
       <Text
         display={{ base: "flex", md: "none" }}
         fontSize="4xl"
         fontFamily={"Inria Serif"}
         color={'black'}
-        className="min-sm:text-5xl text-3xl flex items-center"
-
-      >
-        <img src={img} className=" min-sm:h-[50px] min-sm:w-[50px] h-[30px] w-[30px] mr-2"
-/>
+        className="min-sm:text-5xl text-3xl flex items-center">
+        <img src={img} className=" min-sm:h-[50px] min-sm:w-[50px] h-[30px] w-[30px] mr-2"/>
         TUT
       </Text>
-
       <HStack spacing={{ base: "0", md: "6" }}>
         <IconButton
           size="lg"
@@ -220,14 +228,13 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               _focus={{ boxShadow: "none" }}
             >
               <HStack>
-                <Avatar size={"sm"} src={me} />
+                <Avatar size={"sm"} src={adminData.photo} />
                 <VStack
                   display={{ base: "none", md: "flex" }}
                   alignItems="flex-start"
                   spacing="1px"
-                  ml="2"
-                >
-                  <Text fontSize="sm">Ahmed Elsaied</Text>
+                  ml="2">
+                  <Text fontSize="sm">{adminData.fname}</Text>
                   <Text fontSize="xs" color="gray.600">
                     Admin
                   </Text>
@@ -238,7 +245,6 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               </HStack>
             </MenuButton>
             <MenuList bg={useColorModeValue("White ", "White")}>
-              {/* <MenuItem>Profile</MenuItem> */}
               <MenuItem as={NavLink} to={"setting"}>
                 Settings
               </MenuItem>
@@ -246,7 +252,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                 Profile 
               </MenuItem>
               <MenuDivider />
-              <MenuItem>Sign out</MenuItem>
+              <MenuItem onClick={handleLogOut}>Sign out</MenuItem>
             </MenuList>
           </Menu>
         </Flex>
@@ -276,7 +282,6 @@ const DashboardLayout = () => {
           <SidebarContent onClose={onClose} />
         </DrawerContent>
       </Drawer>
-      {/* mobilenav */}
       <MobileNav onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} p="4">
         <Outlet />
