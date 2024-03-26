@@ -17,7 +17,7 @@ import { useFetchCityQuery } from "../app/feature/CitySlice";
 
 const ActionPlace = ({ dataPlace }: IPlaceDataMap) => {
     const { data: CategoryData } = useFetchCategoryQuery("")
-    const { data: CityData } = useFetchCityQuery("")
+    const { data: CityData } = useFetchCityQuery(1);
     const [updatePlace, { isLoading }] = useUpdatePlaceMutation();
     const [delPlace, { isLoading: deleteLoading }] = useDelPlaceMutation();
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -87,7 +87,13 @@ const ActionPlace = ({ dataPlace }: IPlaceDataMap) => {
 
         if (Object.keys(newErrors).length === 0) {
             try {
-                await updatePlace(placeData);
+                const formDataFormatted = new FormData();
+                for (const key in placeData) {
+                    if (Object.prototype.hasOwnProperty.call(placeData, key)) {
+                        formDataFormatted.append(key, placeData[key] as string | Blob);
+                    }
+                }
+                await updatePlace(formDataFormatted);
                 setIsModalOpen(false);
                 setSelectedImage(null);
                 setPlaceData({
@@ -101,7 +107,7 @@ const ActionPlace = ({ dataPlace }: IPlaceDataMap) => {
                     latitude: ""
                 });
                 toast({
-                    title: "City Updated",
+                    title: "Place Updated",
                     status: "success",
                     duration: 3000,
                     isClosable: true,

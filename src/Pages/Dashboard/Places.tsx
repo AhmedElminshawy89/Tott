@@ -21,18 +21,22 @@ import ActionPlace from "../../actions/ActionPlace";
 import { FaSearch } from "react-icons/fa";
 import { ChangeEvent, useCallback } from "react";
 import { useState, useEffect } from 'react'
-import Pagination from "../../Shared/Pagination";
+import ReactPaginate from "react-paginate";
 
 const Places = () => {
-  const { data, isLoading, error } = useFetchPlaceQuery("");
+  const [page, setPage] = useState<number>(1);
+  const [lastPage, setLastPage] = useState<number>(page);
+  const { data, isLoading, error } = useFetchPlaceQuery(page);
   const [searchResults, setSearchResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const handlePageChange = useCallback((page: number) => {
-    setCurrentPage(page);
-  }, []);
-  const itemsPerPage = 5;
-  const totalPages = Math.ceil(searchResults.length / itemsPerPage);
+  useEffect(() => {
+    if (data && data.Places) {
+      setLastPage(data.Places.last_page);
+    }
+  }, [data]);
+  const handlePageClick = (selectedPage: { selected: number }) => {
+    setPage(selectedPage.selected + 1);
+  };
 
   useEffect(() => {
     if (!searchTerm) {
@@ -99,7 +103,7 @@ const Places = () => {
               <Th>Place Name</Th>
               <Th>Describtion</Th>
               <Th>Image</Th>
-              <Th>City Id</Th>
+              <Th>City Name</Th>
               <Th>Category Name</Th>
               <Th>Longitude</Th>
               <Th>Latitude</Th>
@@ -109,7 +113,7 @@ const Places = () => {
           <Tbody>
             {searchResults.length > 0 ? (
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              searchResults.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((userData: any, i: number) => (
+              searchResults.map((userData: any, i: number) => (
                 <Tr key={i} border={"1px solid #eee"}>
                   <Td>{i + 1}</Td>
                   <Td>{userData?.name}</Td>
@@ -117,7 +121,7 @@ const Places = () => {
                   <Td>
                     <Avatar src={userData?.photo} />
                   </Td>
-                  <Td>{userData?.city_id}</Td>
+                  <Td>{userData?.cities?.name}</Td>
                   <Td>{userData?.category_name}</Td>
                   <Td>{userData?.longitude}</Td>
                   <Td>{userData?.latitude}</Td>
@@ -140,7 +144,7 @@ const Places = () => {
               <Th>Place Name</Th>
               <Th>Describtion</Th>
               <Th>Image</Th>
-              <Th>City Id</Th>
+              <Th>City Name</Th>
               <Th>Category Name</Th>
               <Th>Longitude</Th>
               <Th>Latitude</Th>
@@ -149,15 +153,25 @@ const Places = () => {
           </Tfoot>
         </Table>
       </TableContainer>
-        {totalPages > 1 && (
-          <Box className="flex justify-center my-6">
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
-            />
-          </Box>
-        )}
+      {lastPage > 1 && (
+        <Box className="flex justify-center my-6">
+          <ReactPaginate
+            previousLabel='Previous'
+            nextLabel='Next'
+            breakLabel='...'
+            pageCount={lastPage}
+            marginPagesDisplayed={5}
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={1}
+            containerClassName={"pagination"}
+            pageClassName={"page"}
+            activeClassName={"activePage"}
+            previousClassName={"previous"}
+            nextClassName={"next"}
+          />
+
+        </Box>
+      )}
     </>
   );
 };

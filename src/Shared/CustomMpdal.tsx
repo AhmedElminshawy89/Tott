@@ -19,9 +19,9 @@ interface ICustomModalProps {
 
 const CustomModal = ({ isOpen, onClose, title, children }: ICustomModalProps) => {
     return (
-        <Modal isOpen={isOpen} onClose={onClose} isCentered>
+        <Modal isOpen={isOpen} onClose={onClose} isCentered >
             <ModalOverlay />
-            <ModalContent>
+            <ModalContent bg={'#fff'} color={'#000'}>
                 <ModalHeader>{title}</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>

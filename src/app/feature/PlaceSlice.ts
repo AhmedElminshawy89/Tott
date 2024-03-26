@@ -8,7 +8,7 @@ export const ApiPlace = createApi({
   }),
   endpoints: (build) => ({
     fetchPlace: build.query({
-      query: (page = 1) => `/show?page=${page}`,
+      query:(page) => `/show?page=${page}`,
       providesTags: (result) =>
         result
           ? [
@@ -30,7 +30,7 @@ export const ApiPlace = createApi({
     }),
     updatePlace: build.mutation({
       query: (formData) => ({
-        url: `/update/${formData.id}`,
+        url: `/update/${formData.get("id")}`,
         method: "POST",
         body: formData,
       }),

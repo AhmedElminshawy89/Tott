@@ -30,11 +30,14 @@ import { useAddCityMutation, useFetchCityQuery } from "../../app/feature/CitySli
 import TableSkeleton from "./TableSkeleton";
 import ActionCity from "../../actions/ActionCity";
 import { FaSearch } from "react-icons/fa";
-import Pagination from "../../Shared/Pagination";
+import ReactPaginate from "react-paginate";
+
 
 const City = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { data, isLoading, error } = useFetchCityQuery("");
+  const [page, setPage] = useState<number>(1);
+  const [lastPage, setLastPage] = useState<number>(page);
+  const { data, isLoading, error } = useFetchCityQuery(page);
   const [addCity, { isLoading: LoadingAddCity }] = useAddCityMutation();
   const [cityData, setCityDataData] = useState<ICityData>({
     city_id: "",
@@ -45,8 +48,15 @@ const City = () => {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [searchResults, setSearchResults] = useState<ICityDataMap[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [currentPage, setCurrentPage] = useState<number>(1);
 
+  useEffect(() => {
+    if (data && data.Cities) {
+      setLastPage(data.Cities.last_page);
+    }
+  }, [data]);
+  const handlePageClick = (selectedPage: { selected: number }) => {
+    setPage(selectedPage.selected + 1);
+  };
   useEffect(() => {
     if (!searchTerm) {
       setSearchResults(data?.Cities?.data || []);
@@ -86,10 +96,6 @@ const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setSearchTerm(value);
 
-  }, []);
-  
-  const handlePageChange = useCallback((page: number) => {
-    setCurrentPage(page);
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -139,8 +145,6 @@ const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
   if (error) return <h1>Error</h1>;
   if (isLoading) return <TableSkeleton />;
   
-  const itemsPerPage = 5;
-  const totalPages = Math.ceil(searchResults.length / itemsPerPage);
   return (
     <Box>
       <Box className="flex justify-end">
@@ -311,7 +315,7 @@ const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
           </Thead>
           <Tbody>
             {searchResults.length > 0 ? (
-              searchResults.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((data: ICityDataMap, i: number) => (
+              searchResults.map((data: ICityDataMap, i: number) => (
                 <Tr border="1px solid #eee" key={i}>
                   <Td>{i+1}</Td>
                   <Td>{data.name}</Td>
@@ -342,13 +346,23 @@ const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
             </Tr>
           </Tfoot>
         </Table>
-        {totalPages > 1 && (
+        {lastPage > 1 && (
           <Box className="flex justify-center my-6">
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
+            <ReactPaginate
+              previousLabel='Previous'
+              nextLabel='Next'
+              breakLabel='...'
+              pageCount={lastPage}
+              marginPagesDisplayed={5}
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={1}
+              containerClassName={"pagination"}
+              pageClassName={"page"}
+              activeClassName={"activePage"}
+              previousClassName={"previous"}
+              nextClassName={"next"}
             />
+
           </Box>
         )}
       </TableContainer>

@@ -12,6 +12,7 @@ import {
   useColorModeValue,
   FormHelperText,
   Spinner,
+  useToast,
 } from "@chakra-ui/react";
 import { CgClose } from "react-icons/cg";
 import { FiUploadCloud } from "react-icons/fi";
@@ -21,6 +22,7 @@ import { useFetchCityQuery } from "../../app/feature/CitySlice";
 import { useAddPlaceMutation } from "../../app/feature/PlaceSlice";
 
 const AddPlaces = () => {
+  const toast = useToast()
   const { data: CategoryData } = useFetchCategoryQuery("")
   const { data: CityData } = useFetchCityQuery("")
   const [addPlace, { isLoading }] = useAddPlaceMutation()
@@ -91,7 +93,7 @@ const AddPlaces = () => {
       formData.append("name", placeData.name);
       formData.append("desc", placeData.desc);
       formData.append("city_id", placeData.city_id);
-      formData.append("category_name", placeData.category_name);
+      formData.append("category_n ame", placeData.category_name);
       formData.append("longitude", placeData.longitude);
       formData.append("latitude", placeData.latitude);
       if (placeData.photo) {
@@ -105,6 +107,21 @@ const AddPlaces = () => {
       }
       try {
         await addPlace(formData);
+        setPlaceData({
+          name: "",
+          desc: "",
+          city_id: "",
+          photo: null,
+          category_name: "",
+          longitude: "",
+          latitude: "",
+        })
+        toast({
+          title: "Place Added",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+      });
       } catch (error) {
         console.error("Error adding place:", error);
       }

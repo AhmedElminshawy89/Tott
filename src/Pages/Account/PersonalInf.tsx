@@ -2,14 +2,13 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Image, Text } from "@chakra-ui/react";
+import { Image, Spinner, Text, useToast } from "@chakra-ui/react";
 import log from "../../assets/Images/logo.png";
 import { NavLink } from "react-router-dom";
 import eye from "../../assets/Images/eye.png";
 import reWrite from "../../assets/Images/reWrite.png";
 import { motion } from "framer-motion";
-import ModelDash from "../../Shared/ModalDash";
-import React, { ChangeEvent, useCallback, useState } from "react";
+import React, { ChangeEvent, useCallback, useState ,useEffect} from "react";
 import {
   Input,
   FormHelperText,
@@ -26,19 +25,24 @@ import { CgClose } from "react-icons/cg";
 import { countryList } from "../../assets/data/Countries";
 import Select from "react-select";
 import { cities } from "../../assets/data/Cities";
+import { useUpdateUserMutation } from "../../app/feature/UserSlice";
+import CustomModal from "../../Shared/CustomMpdal";
 
 const PersonalInf = () => {
   const GetData = localStorage.getItem("username");
   const userData = GetData ? JSON.parse(GetData) : null;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [updateUser, { isLoading }] = useUpdateUserMutation();
+  const toast = useToast();
   const [isEmail, setIsEmail] = useState<boolean | string>(false);
   const [isFName, setIsFName] = useState<boolean | string>(false);
   const [isLName, setIsLName] = useState<boolean | string>(false);
-
   const [isPhone, setIsPhone] = useState<boolean | string>(false);
   const [isAge, setIsAge] = useState<boolean | string>(false);
   const [isGender, setIsGender] = useState<boolean | string>(false);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [user, setUser] = React.useState<UserSignUp>({
+    id: String(userData.id) || "",
     fname: userData.fname || "",
     lname: userData.lname || "",
     email: userData.email || "",
@@ -135,7 +139,7 @@ const PersonalInf = () => {
       if (!user.lname.trim()) {
         setIsLName("Last name is required");
       }
-      if (!user.age.trim()) {
+      if (!user.age.toString().trim()) {
         setIsAge("Age is required");
       }
       if (!user.gender.trim()) {
@@ -145,10 +149,63 @@ const PersonalInf = () => {
         setIsPhone("Phone is required");
         return;
       }
-      console.log(user);
+    const formDataFormatted = new FormData();
+    for (const key in user) {
+        if (Object.prototype.hasOwnProperty.call(user, key)) {
+            formDataFormatted.append(key, user[key] as string | Blob);
+        }
+    }
+    updateUser(formDataFormatted);
+      localStorage.setItem("username", JSON.stringify(user))
+      setUser({
+        id: "",
+        fname: "",
+        lname: "",
+        email: "",
+        phone: "",
+        age: "",
+        gender: "",
+        city: "",
+        country: "",
+        photo: null,
+      });
+      setSelectedImage(null);
+      setIsModalOpen(false);
+      toast({
+        title: `User Updated`,
+        description: `${userData.fname} Your Information is Updated`,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
     },
-    [user]
+    [toast, updateUser, user, userData.fname]
   );
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  useEffect(() => {
+    if (!isModalOpen) {
+      setUser({
+        id: String(userData.id) || "",
+        fname: userData.fname || "",
+        lname: userData.lname || "",
+        email: userData.email || "",
+        phone: userData.phone || "",
+        age: userData.age || "",
+        gender: userData.gender || "",
+        city: userData.city || "",
+        country: userData.country || "",
+        photo: userData.photo || null,
+      })
+    }
+  }, [isModalOpen, userData.age, userData.city, userData.country, userData.email, userData.fname, userData.gender, userData.id, userData.lname, userData.phone, userData.photo]);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -177,17 +234,18 @@ const PersonalInf = () => {
               {userData.fname} {""}
               {userData.lname}
             </Text>
-            {/* <Image
-              src={reWrite}
-              w={35}
-              h={35}
-              display={{ base: "flex", md: "none" }}
-            /> */}
-            <Box>
-              <ModelDash
-                image={reWrite}
+            <Box position={"absolute"} top={85} right={15}>
+              <Button onClick={handleOpenModal} bg={'transparent'} _hover={{bg:'transparent'}}>
+                <Image
+                  src={reWrite}
+                  w={35}
+                  h={35}
+                />
+              </Button>
+              <CustomModal
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
                 title="Edit User"
-                size="4xl"
               >
                 <form onSubmit={handleSubmit} className="p-0">
                   <Flex w={"100%"} justifyContent={"space-between"} gap={"12px"}>
@@ -388,9 +446,7 @@ const PersonalInf = () => {
                         {isEmail}
                       </FormHelperText>
                     )}
-                  <FormLabel color={'#000'}>Image</FormLabel>
                   </FormControl>
-
                   <div
                     className="w-[100%] bg-transparent text-center  rounded-lg 
         flex flex-col justify-center items-center border-2 border-dotted border-[#eee]"
@@ -458,19 +514,19 @@ const PersonalInf = () => {
                             : useColorModeValue("black", "black"),
                       }}
                     >
-                      {/* {loading ? (
+                      {isLoading ? (
                         <>
-                          Loading...
+                          Save
                           <Spinner size="sm" color="white" />
                         </>
                       ) : (
                         "Save"
-                      )} */}
-                      Save
+                      )}
+
                     </Button>
                   </Box>
                 </form>
-              </ModelDash>
+              </CustomModal>
             </Box>
           </Flex>
           <Box as={NavLink} to="/" w={100}>
@@ -484,23 +540,12 @@ const PersonalInf = () => {
           </Box>
         </Flex>
         <Box maxW={{ base: "100%", md: "80%" }} mt={"20px"}>
-          {/* <Image
-            src={reWrite}
-            w={35}
-            h={35}
-            position={"absolute"}
-            top={120}
-            right={3}
-            mx={10}
-            display={{ base: "none", md: "flex" }}
-            cursor={"pointer"}
-          /> */}
           <Flex justifyContent={"space-between"}>
             <Text className="md:text-3xl text-2xl text-[#737373] mt-4  break-all">
               First name
             </Text>
             <Text className="md:text-3xl text-2xl text-main-400 mt-4  break-all">
-              {userData.lname}
+              {userData.fname}
             </Text>
           </Flex>
           <Flex justifyContent={"space-between"}>

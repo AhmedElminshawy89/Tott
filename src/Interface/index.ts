@@ -6,6 +6,7 @@ export interface UserState {
   password: string;
 }
 export interface UserSignUp {
+  id?:string|number;
   fname: string;
   lname: string;
   email: string;
@@ -16,7 +17,8 @@ export interface UserSignUp {
   gender: string;
   city: string;
   country: string;
-  photo: File | null;
+  photo: File | null | string | undefined;
+  [key: string]: string | number | File | null | undefined;
 }
 export interface IUserData {
   id: string | undefined;
@@ -29,7 +31,7 @@ export interface IUserData {
   city: string;
   country: string;
   photo: File | null | string | undefined;
-  // password: unknown;
+  [key: string]: string | number | File | null | undefined;
 }
 
 export interface IUserDataMap {
@@ -164,14 +166,15 @@ export interface ICityDataUpdate {
   selectedImage?: File | null | string | undefined;
 }
 export interface IPlaceData extends ICityData {
-  id?: string | number;
-  name: string;
-  desc: string;
-  city_id: string;
-  photo: File | null | string | undefined;
-  category_name: string;
-  longitude: string;
-  latitude: string;
+    id: string;
+    name: string;
+    desc: string;
+    city_id: string;
+    photo: string | File | null;
+    category_name: string;
+    longitude: string;
+    latitude: string;
+    [key: string]: string | File | null;
 }
 export interface IPlaceDataMap {
   dataPlace: {
@@ -239,3 +242,14 @@ export interface ICityDataMap {
   desc: string;
   photo: string | undefined;
 }
+export type FormDataa = {
+  id?: string;
+  fname: string;
+  lname: string;
+  phone: string;
+  gender: string;
+  email: string;
+  photo?: string | File | null; 
+  [key: string]: string | File | null | undefined; 
+};
+

@@ -18,20 +18,23 @@ import TableSkeleton from "./TableSkeleton";
 import ActionUser from "../../actions/ActionUser";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import Pagination from "../../Shared/Pagination";
+import ReactPaginate from "react-paginate";
 
 
 const Users = () => {
-  const { data, isLoading, error } = useFetchUserQuery("");
+  const [page, setPage] = useState<number>(1);
+  const [lastPage, setLastPage] = useState<number>(page);
+  const { data, isLoading, error } = useFetchUserQuery(page);
   const [searchResults, setSearchResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const handlePageChange = useCallback((page: number) => {
-    setCurrentPage(page);
-  }, []);
-  const itemsPerPage = 5;
-  const totalPages = Math.ceil(searchResults.length / itemsPerPage);
-
+  useEffect(() => {
+    if (data && data.Users) {
+      setLastPage(data.Users.last_page);
+    }
+  }, [data]);
+  const handlePageClick = (selectedPage: { selected: number }) => {
+    setPage(selectedPage.selected + 1);
+  };
   useEffect(() => {
     if (!searchTerm) {
       setSearchResults(data?.Users?.data || []);
@@ -106,7 +109,7 @@ const Users = () => {
           <Tbody>
             {searchResults.length > 0 ? (
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              searchResults.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((userData: any, i: number) => (
+              searchResults.map((userData: any, i: number) => (
                 <Tr key={i} border={"1px solid #eee"}>
                   <Td>{i + 1}</Td>
                   <Td>{userData?.fname}</Td>
@@ -150,15 +153,25 @@ const Users = () => {
           </Tfoot>
         </Table>
       </TableContainer>
-      {totalPages > 1 && (
-        <Box className="flex justify-center my-6">
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
-        </Box>
-      )}
+      {lastPage > 1 && (
+          <Box className="flex justify-center my-6">
+            <ReactPaginate
+              previousLabel='Previous'
+              nextLabel='Next'
+              breakLabel='...'
+              pageCount={lastPage}
+              marginPagesDisplayed={5}
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={1}
+              containerClassName={"pagination"}
+              pageClassName={"page"}
+              activeClassName={"activePage"}
+              previousClassName={"previous"}
+              nextClassName={"next"}
+            />
+
+          </Box>
+        )}
     </>
   );
 };

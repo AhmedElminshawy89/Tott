@@ -10,15 +10,15 @@ import login from "../../assets/Images/login.png";
 import signup from "../../assets/Images/registration.png";
 import Disconnect from "./../Disconnect";
 import LoginAdmin from "./LoginAdmin";
-import SignUpAdmin from "./SignUpAdmin";
+// import SignUpAdmin from "./SignUpAdmin";
 
 const Registration: React.FC = () => {
   const [isSignUpMode, setIsSignUpMode] = useState<boolean>(false);
   const { colorMode } = useColorMode();
   // const [isSignupSuccess,setIsSignupSuccess] = useState(false)
-  const handleSignUpClick = useCallback(() => {
-    setIsSignUpMode(true);
-  }, []);
+  // const handleSignUpClick = useCallback(() => {
+  //   setIsSignUpMode(true);
+  // }, []);
 
   const handleSignInClick = useCallback(() => {
     setIsSignUpMode(false);
@@ -37,7 +37,7 @@ const Registration: React.FC = () => {
         <div className="form-container">
           <div className="signin-signup">
             <LoginAdmin />
-            <SignUpAdmin/>
+            {/* <SignUpAdmin/> */}
           </div>
         </div>
         <div className="panels-container">
@@ -48,13 +48,13 @@ const Registration: React.FC = () => {
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                 Libero, mollitia.
               </p>
-              <button
+              {/* <button
                 className="btn transparent"
                 onClick={handleSignUpClick}
                 id="sign-up-btn"
               >
                 Sign Up
-              </button>
+              </button> */}
             </div>
             <img className="img" src={signup} alt="" />
           </div>

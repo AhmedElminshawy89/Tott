@@ -25,33 +25,31 @@ import TableSkeleton from "./TableSkeleton";
 import ActionCategory from "../../actions/ActionCategory";
 import CustomModal from "../../Shared/CustomMpdal";
 import { FaSearch } from "react-icons/fa";
-import Pagination from "../../Shared/Pagination";
+import ReactPaginate from "react-paginate";
 
 const Category = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const { data, isLoading, error } = useFetchCategoryQuery("");
+  const [page, setPage] = useState<number>(1);
+  const [lastPage, setLastPage] = useState<number>(1);
+  const { data, isLoading, error } = useFetchCategoryQuery(page);
   const [addCategory, { isLoading: LoadingAddCategory }] = useAddCategoryMutation();
-
   const [categoryData, setCategoryData] = useState<ICategoryData>({
     name: "",
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [searchResults, setSearchResults] = useState<ICategoryDataMap[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-
+  const [fullData, setFullData] = useState<ICategoryDataMap[]>([]);
   useEffect(() => {
-    if (!searchTerm) {
-      setSearchResults(data?.Categories?.data || []);
-      return;
+    if (data && data.Categories) {
+      setFullData(data.Categories.data);
+      setSearchResults(data.Categories.data);
+      setLastPage(data.Categories.last_page);
     }
-    const filteredData = data?.Categories?.data.filter((item: ICategoryDataMap) =>
-      item.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setSearchResults(filteredData || []);
-  }, [data, searchTerm]);
-
+  }, [data]);
+  const handlePageClick = (selectedPage: { selected: number }) => {
+    setPage(selectedPage.selected + 1);
+  };
   const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setCategoryData((prevCategoryData) => ({
@@ -65,18 +63,24 @@ const Category = () => {
       }));
     }
   }, [errors]);
-  const onSearchChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setSearchTerm(value);
-  }, []);
-  
-  const handlePageChange = useCallback((page: number) => {
-    setCurrentPage(page);
-  }, []);
+  const onSearchChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const { value } = e.target;
+      setSearchTerm(value);
+      if (!value) {
+        setSearchResults(fullData);
+      } else {
+        const filteredData = fullData.filter((item: ICategoryDataMap) =>
+          item.name.toLowerCase().includes(value.toLowerCase())
+        );
+        setSearchResults(filteredData);
+      }
+    },
+    [fullData]
+  );
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newErrors: { [key: string]: string } = {};
-
     if (!categoryData.name.trim()) {
       newErrors.name = "Category name is required";
     } else if (categoryData.name.trim().length < 2) {
@@ -94,18 +98,15 @@ const Category = () => {
       setErrors(newErrors);
     }
   };
-
   if (error) return <h1>Error</h1>
   if (isLoading) return <TableSkeleton />
-  const itemsPerPage = 5;
-  const totalPages = Math.ceil(searchResults.length / itemsPerPage);
   return (
     <Box>
       <Box className="flex justify-end">
         <Box className="flex items-center justify-between flex-wrap">
           <h1 >
-          <span className="text-black font-extrabold text-4xl font-sans">Categories</span><br/>
-          <span className="text-xl text-gray-600">All of Categories</span>
+            <span className="text-black font-extrabold text-4xl font-sans">Categories</span><br />
+            <span className="text-xl text-gray-600">All of Categories</span>
           </h1>
           <Button onClick={onOpen} bg={"#000"}
             color={"white"}
@@ -196,25 +197,45 @@ const Category = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {searchResults.length > 0 ? (
-              searchResults.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((data: ICategoryDataMap, i: number) => (
-                <Tr border="1px solid #eee" key={i}>
-                  <Td>{i+1}</Td>
-                  <Td>{data.name}</Td>
-                  <Td>
-                    <ActionCategory data={data} name={""} />
+            {searchTerm.trim() === "" ? (
+              fullData.length > 0 ? (
+                fullData.map((data: ICategoryDataMap, i: number) => (
+                  <Tr border="1px solid #eee" key={i}>
+                    <Td>{i + 1}</Td>
+                    <Td>{data.name}</Td>
+                    <Td>
+                      <ActionCategory data={data} name={""} />
+                    </Td>
+                  </Tr>
+                ))
+              ) : (
+                <Tr>
+                  <Td colSpan={3} textAlign={'center'}>
+                    No data available
                   </Td>
                 </Tr>
-              ))
+              )
             ) : (
-              <Tr>
-                <Td colSpan={3} textAlign={'center'}>
-                  {searchTerm ? "No matching results found" : "No data available"}
-                </Td>
-              </Tr>
+              searchResults.length > 0 ? (
+                searchResults.map((data: ICategoryDataMap, i: number) => (
+                  <Tr border="1px solid #eee" key={i}>
+                    <Td>{i + 1}</Td>
+                    <Td>{data.name}</Td>
+                    <Td>
+                      <ActionCategory data={data} name={""} />
+                    </Td>
+                  </Tr>
+                ))
+              ) : (
+                <Tr>
+                  <Td colSpan={3} textAlign={'center'}>
+                    No matching results found
+                  </Td>
+                </Tr>
+              )
             )}
-          </Tbody>
 
+          </Tbody>
           <Tfoot bg={'gray.100'}>
             <Tr>
               <Th>ID</Th>
@@ -223,16 +244,26 @@ const Category = () => {
             </Tr>
           </Tfoot>
         </Table>
-      </TableContainer>
-        {totalPages > 1 && (
+        {lastPage > 1 && (
           <Box className="flex justify-center my-6">
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
+            <ReactPaginate
+              previousLabel='Previous'
+              nextLabel='Next'
+              breakLabel='...'
+              pageCount={lastPage}
+              marginPagesDisplayed={5}
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={1}
+              containerClassName={"pagination"}
+              pageClassName={"page"}
+              activeClassName={"activePage"}
+              previousClassName={"previous"}
+              nextClassName={"next"}
             />
+
           </Box>
         )}
+      </TableContainer>
     </Box>
   );
 };

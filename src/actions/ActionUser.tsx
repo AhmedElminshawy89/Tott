@@ -163,7 +163,13 @@ const ActionUser = ({ data }: IUserDataMap) => {
                 setIsPhone("Phone is required");
                 return;
             }
-            updateUser(user);
+            const formDataFormatted = new FormData();
+            for (const key in user) {
+                if (Object.prototype.hasOwnProperty.call(user, key)) {
+                    formDataFormatted.append(key, user[key] as string | Blob);
+                }
+            }
+            updateUser(formDataFormatted);
             setIsModalOpen(false);
             setUser({
                 id: "",

@@ -17,23 +17,26 @@ import {
 } from "@chakra-ui/react";
 import { useFetchAdminQuery } from "../../app/feature/AdminSlice";
 import TableSkeleton from "./TableSkeleton";
-import {  ChangeEvent, useCallback, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import ActionAdmin from "../../actions/ActionAdmin";
-import {  IAdminDataMap } from "../../Interface";
+import { IAdminDataMap } from "../../Interface";
 import { FaSearch } from "react-icons/fa";
-import Pagination from "../../Shared/Pagination";
+import ReactPaginate from "react-paginate";
 
 const Admins = () => {
-  const { data, isLoading,error } = useFetchAdminQuery("")
+  const [page, setPage] = useState<number>(1);
+  const [lastPage, setLastPage] = useState<number>(page);
+  const { data, isLoading, error } = useFetchAdminQuery(page)
   const [searchResults, setSearchResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const handlePageChange = useCallback((page: number) => {
-    setCurrentPage(page);
-  }, []);
-  const itemsPerPage = 5;
-  const totalPages = Math.ceil(searchResults.length / itemsPerPage);
-
+  useEffect(() => {
+    if (data && data.Admins) {
+      setLastPage(data.Admins.last_page);
+    }
+  }, [data]);
+  const handlePageClick = (selectedPage: { selected: number }) => {
+    setPage(selectedPage.selected + 1);
+  };
   useEffect(() => {
     if (!searchTerm) {
       setSearchResults(data?.Admins?.data || []);
@@ -54,15 +57,15 @@ const Admins = () => {
   if (isLoading) return <TableSkeleton />
   return (
     <>
-    <TableContainer
-      bg={"white"}
-      borderRadius={"10px"}
-      p={2}
-      color={"#000"}
-      fontSize={"18px"}
-      my={7}
-    >
-              <Box position={'relative'}>
+      <TableContainer
+        bg={"white"}
+        borderRadius={"10px"}
+        p={2}
+        color={"#000"}
+        fontSize={"18px"}
+        my={7}
+      >
+        <Box position={'relative'}>
           <Input
             placeholder="Search here..."
             onChange={onChangeHandler}
@@ -89,70 +92,80 @@ const Admins = () => {
             _hover={{ bg: 'transparent' }}
           />
         </Box>
-      <Table variant="solid" border={'1px solid #eee'}>
-        <TableCaption>Admins</TableCaption>
-        <Thead>
-          <Tr bg="gray.100">
-            <Th>ID</Th>
-            <Th>First Name</Th>
-            <Th>Last Name</Th>
-            <Th>Phone</Th>
-            <Th>Gender</Th>
-            <Th>Email</Th>
-            <Th>Images</Th>
-            <Th>Actions</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {searchResults.length > 0 ? (
-           searchResults.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((adminData:IAdminDataMap,i:number ) => (
-              <Tr key={i} border={'1px solid #eee'}>
-                <Td>{i+1}</Td>
-                <Td>{adminData.fname}</Td>
-                <Td>{adminData.lname}</Td>
-                <Td>{adminData.phone}</Td>
-                <Td>{adminData.gender}</Td>
-                <Td>{adminData.email}</Td>
-                <Td>
-                  <Avatar src={adminData.photo} />
-                </Td>
-                <Td>
-                  <ActionAdmin data={adminData}/>
+        <Table variant="solid" border={'1px solid #eee'}>
+          <TableCaption>Admins</TableCaption>
+          <Thead>
+            <Tr bg="gray.100">
+              <Th>ID</Th>
+              <Th>First Name</Th>
+              <Th>Last Name</Th>
+              <Th>Phone</Th>
+              <Th>Gender</Th>
+              <Th>Email</Th>
+              <Th>Images</Th>
+              <Th>Actions</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {searchResults.length > 0 ? (
+              searchResults.map((adminData: IAdminDataMap, i: number) => (
+                <Tr key={i} border={'1px solid #eee'}>
+                  <Td>{i + 1}</Td>
+                  <Td>{adminData.fname}</Td>
+                  <Td>{adminData.lname}</Td>
+                  <Td>{adminData.phone}</Td>
+                  <Td>{adminData.gender}</Td>
+                  <Td>{adminData.email}</Td>
+                  <Td>
+                    <Avatar src={adminData.photo} />
+                  </Td>
+                  <Td>
+                    <ActionAdmin data={adminData} />
+                  </Td>
+                </Tr>
+              ))
+            ) : (
+              <Tr>
+                <Td colSpan={8} textAlign={'center'}>
+                  {searchTerm ? "No matching results found" : "No data available"}
                 </Td>
               </Tr>
-            ))
-          ) : (
-            <Tr>
-            <Td colSpan={8} textAlign={'center'}>
-              {searchTerm ? "No matching results found" : "No data available"}
-            </Td>
-          </Tr>
-          )}
+            )}
 
-        </Tbody>
-        <Tfoot>
-          <Tr bg="gray.100">
-            <Th>ID</Th>
-            <Th>First Name</Th>
-            <Th>Last Name</Th>
-            <Th>Phone</Th>
-            <Th>Gender</Th>
-            <Th>Email</Th>
-            <Th>Images</Th>
-            <Th>Actions</Th>
-          </Tr>
-        </Tfoot>
-      </Table>
-    </TableContainer>
-    {totalPages > 1 && (
-          <Box className="flex justify-center my-6">
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
-            />
-          </Box>
-        )}
+          </Tbody>
+          <Tfoot>
+            <Tr bg="gray.100">
+              <Th>ID</Th>
+              <Th>First Name</Th>
+              <Th>Last Name</Th>
+              <Th>Phone</Th>
+              <Th>Gender</Th>
+              <Th>Email</Th>
+              <Th>Images</Th>
+              <Th>Actions</Th>
+            </Tr>
+          </Tfoot>
+        </Table>
+      </TableContainer>
+      {lastPage > 1 && (
+        <Box className="flex justify-center my-6">
+          <ReactPaginate
+            previousLabel='Previous'
+            nextLabel='Next'
+            breakLabel='...'
+            pageCount={lastPage}
+            marginPagesDisplayed={5}
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={1}
+            containerClassName={"pagination"}
+            pageClassName={"page"}
+            activeClassName={"activePage"}
+            previousClassName={"previous"}
+            nextClassName={"next"}
+          />
+
+        </Box>
+      )}
     </>
   );
 };

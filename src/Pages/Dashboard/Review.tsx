@@ -4,14 +4,22 @@ import { Avatar, Box, IconButton, Input, Table, TableCaption, TableContainer, Tb
 import { useFetchReviewQuery } from "../../app/feature/ReviewSlice";
 import { FaSearch } from "react-icons/fa";
 import TableSkeleton from "./TableSkeleton";
-import Pagination from "../../Shared/Pagination";
+import ReactPaginate from "react-paginate";
 
 const Review = () => {
-  const { data, isLoading, error } = useFetchReviewQuery("");
+  const [page, setPage] = useState<number>(1);
+  const [lastPage, setLastPage] = useState<number>(page);
+  const { data, isLoading, error } = useFetchReviewQuery(page);
   const [searchResults, setSearchResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [currentPage, setCurrentPage] = useState<number>(1);
-
+  useEffect(() => {
+    if (data && data.Places) {
+      setLastPage(data.Places.last_page);
+    }
+  }, [data]);
+  const handlePageClick = (selectedPage: { selected: number }) => {
+    setPage(selectedPage.selected + 1);
+  };
   useEffect(() => {
     if (!searchTerm) {
       setSearchResults(data?.Rating?.data || []);
@@ -28,15 +36,9 @@ const Review = () => {
     setSearchTerm(value);
   }, []);
 
-  const handlePageChange = useCallback((page: number) => {
-    setCurrentPage(page);
-  }, []);
 
   if (error) return <h1>Error</h1>;
   if (isLoading) return <TableSkeleton />;
-
-  const itemsPerPage = 5;
-  const totalPages = Math.ceil(searchResults.length / itemsPerPage);
 
   return (
     <>
@@ -84,7 +86,7 @@ const Review = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {searchResults.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((ratingData: { id: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; users: { fname: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; lname: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; photo: string | undefined; }; rating: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; review: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; }, i: number) => (
+            {searchResults.map((ratingData: { id: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; users: { fname: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; lname: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; photo: string | undefined; }; rating: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; review: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; }, i: number) => (
               <Tr key={i} border={'1px solid #eee'}>
                 <Td>{i + 1}</Td>
                 <Td>{ratingData.users?.fname}{" "}{ratingData.users?.lname}</Td>
@@ -107,15 +109,24 @@ const Review = () => {
           </Tfoot>
         </Table>
       </TableContainer>
-        {totalPages > 1 && (
-          <Box className="flex justify-center my-6">
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
-            />
-          </Box>
-        )}
+      {lastPage > 1 && (
+        <Box className="flex justify-center my-6">
+          <ReactPaginate
+            previousLabel='Previous'
+            nextLabel='Next'
+            breakLabel='...'
+            pageCount={lastPage}
+            marginPagesDisplayed={5}
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={1}
+            containerClassName={"pagination"}
+            pageClassName={"page"}
+            activeClassName={"activePage"}
+            previousClassName={"previous"}
+            nextClassName={"next"}
+          />
+        </Box>
+      )}
     </>
   );
 };

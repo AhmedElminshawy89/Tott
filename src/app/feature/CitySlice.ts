@@ -8,12 +8,12 @@ export const ApiCity = createApi({
     baseUrl: "http://localhost:8001/api/admin/city",
   }),
   endpoints: (build) => ({
-    fetchCity: build.query({
-      query: (page = 1) => `/show?page=${page}`,
+    fetchCity: build.query<any, number>({
+      query: (page) => `/show?page=${page}`,
       providesTags: (result) =>
         result
           ? [
-              ...result.Cities.data.map(({ id }: string | any)  => ({
+              ...result.Cities.data.map(({ id }: { id: string }) => ({
                 type: "city",
                 id,
               })),
@@ -21,7 +21,7 @@ export const ApiCity = createApi({
             ]
           : ["city"],
     }),
-    addCity: build.mutation({
+    addCity: build.mutation<any, FormData>({
       query: (formData) => ({
         url: "/add",
         method: "POST",
@@ -29,16 +29,16 @@ export const ApiCity = createApi({
       }),
       invalidatesTags: ["city"],
     }),
-    updateCity: build.mutation({
-      query: (formData) => ({
-        url: `/update/${formData.id}`,
+    updateCity: build.mutation<any, FormData>({
+      query: (updateCityData) => ({
+        url: `/update/${updateCityData.get("id")}`,
         method: "POST",
-        body: formData,
+        body: updateCityData,
       }),
       invalidatesTags: ["city"],
     }),
-    delCity: build.mutation({
-      query: (id: string) => ({
+    delCity: build.mutation<any, string>({
+      query: (id) => ({
         url: `/delete/${id}`,
         method: "POST",
       }),

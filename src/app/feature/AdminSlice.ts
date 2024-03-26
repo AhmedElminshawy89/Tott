@@ -9,7 +9,7 @@ export const ApiAdmin = createApi({
   }),
   endpoints: (build) => ({
     fetchAdmin: build.query({
-      query: () => "/show",
+      query: (page) => `/show?page=${page}`,
       providesTags: (result) =>
         result
           ? [
@@ -31,7 +31,7 @@ export const ApiAdmin = createApi({
     }),
     updateAdmin: build.mutation({
       query: (formData) => ({
-        url: `/update/${formData.id}`,
+        url: `/update/${formData.get("id")}`,
         method: "POST",
         body: formData,
       }),

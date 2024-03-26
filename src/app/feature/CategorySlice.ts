@@ -9,7 +9,7 @@ export const ApiCategory = createApi({
   }),
   endpoints: (build) => ({
     fetchCategory: build.query({
-      query: (page = 1) => `/show?page=${page}`,
+      query: (page) => `/show?page=${page}`,
       providesTags: (result) =>
         result
           ? [

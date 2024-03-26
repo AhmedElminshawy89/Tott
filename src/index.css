@@ -213,4 +213,31 @@ iframe {
   -moz-transition: 0.5s;
   -ms-transition: 0.5s;
   -o-transition: 0.5s;
+  -webkit-animation: fadeIn 1s ease-in-out;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.next,
+.previous {
+  background-color: #000;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 8px;
+}
+
+.activePage {
+  background-color: #000;
+  text-align: center;
+  color: #fff;
+  width: 25px;height: 25px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
 }

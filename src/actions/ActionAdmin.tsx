@@ -9,7 +9,7 @@ import CustomModal from "../Shared/CustomMpdal";
 import DeleteCategoryDialog from "../Shared/AlertDialog";
 import { FiUploadCloud } from "react-icons/fi";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import { IAdminData, IAdminDataMap } from "../Interface";
+import { FormDataa, IAdminData, IAdminDataMap } from "../Interface";
 import { useDelAdminMutation, useUpdateAdminMutation } from "../app/feature/AdminSlice";
 import Select from "react-select";
 
@@ -94,7 +94,7 @@ const ActionAdmin = ({ data }: ActionAdminProps) => {
 
         if (Object.keys(newErrors).length === 0) {
             try {
-                const formData = {
+                const formData:FormDataa = {
                     id: adminData.id,
                     fname: adminData.fname,
                     lname: adminData.lname,
@@ -103,7 +103,13 @@ const ActionAdmin = ({ data }: ActionAdminProps) => {
                     email: adminData.email,
                     photo: adminData.photo,
                 };
-                await updateAdmin(formData);
+                const formDataFormatted = new FormData();
+                for (const key in formData) {
+                    if (Object.prototype.hasOwnProperty.call(formData, key)) {
+                        formDataFormatted.append(key, formData[key] as string | Blob);
+                    }
+                }
+                await updateAdmin(formDataFormatted);
                 setIsModalOpen(false);
                 setAdminData({id: "",
                     fname: "",

@@ -9,7 +9,7 @@ export const ApiUser = createApi({
   }),
   endpoints: (build) => ({
     fetchUser: build.query({
-      query: () => "/showUser",
+      query: (page) => `/showUser?page=${page}`,
       providesTags: (result) =>
         result
           ? [
@@ -31,7 +31,7 @@ export const ApiUser = createApi({
     }),
     updateUser: build.mutation({
       query: (formData) => ({
-        url: `/updateUser/${formData.id}`,
+        url: `/updateUser/${formData.get("id")}`,
         method: "POST",
         body: formData,
       }),

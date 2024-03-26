@@ -11,6 +11,10 @@ import { ICityData, ICityDataMap } from "../Interface";
 import { FiUploadCloud } from "react-icons/fi";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 
+export interface FormDataLike {
+    [key: string]: string | Blob;
+}
+
 const ActionCity = ({ data }: ICityDataMap) => {
     const [updateCity, { isLoading: updateLoading }] = useUpdateCityMutation();
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -72,13 +76,19 @@ const ActionCity = ({ data }: ICityDataMap) => {
         }
         if (Object.keys(newErrors).length === 0) {
             try {
-                const formData = {
-                    id: cityData.id,
+                const formData: FormDataLike = {
+                    id: String(cityData.id),
                     name: cityData.city_id,
                     desc: cityData.desc,
-                    photo: selectedImage,
+                    photo: cityData.photo instanceof File ? cityData.photo : '',
                 };
-                await updateCity(formData);
+                const formDataFormatted = new FormData();
+                for (const key in formData) {
+                    if (Object.prototype.hasOwnProperty.call(formData, key)) {
+                        formDataFormatted.append(key, formData[key] as string | Blob);
+                    }
+                }
+                await updateCity(formDataFormatted);
                 setIsModalOpen(false);
                 setCityDataData({ id: "", city_id: "", desc: "", photo: null });
                 setSelectedImage(null);

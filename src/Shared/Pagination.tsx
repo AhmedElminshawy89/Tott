@@ -1,16 +1,20 @@
-import { ButtonGroup, Button } from '@chakra-ui/react';
+import { Button, ButtonGroup } from "@chakra-ui/react";
+
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
-  onPageChange: (page: number) => void;
+  onPageClick: (page: number) => void;
 }
-const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
+
+const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageClick }) => {
   const handleClick = (page: number) => {
     if (page >= 1 && page <= totalPages) {
-      onPageChange(page);
+      onPageClick(page);
     }
   };
+
   const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
+
   return (
     <ButtonGroup spacing="1">
       <Button onClick={() => handleClick(currentPage - 1)} disabled={currentPage === 1}>
